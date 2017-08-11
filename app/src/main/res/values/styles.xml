@@ -17,4 +17,32 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="CustomEditText">
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textSize">@dimen/edit_textSize</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/row_height</item>
+        <item name="android:background">@drawable/edit_text_shape</item>
+        <item name="android:inputType">text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textAlignment">gravity</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:lines">1</item>
+        <item name="android:layout_weight">1</item>
+
+
+    </style>
+
+    <style name="CustomTextView">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/edit_textSize</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/row_height</item>
+
+    </style>
+
+
+    <dimen name="edit_textSize">16dp</dimen>
 </resources>

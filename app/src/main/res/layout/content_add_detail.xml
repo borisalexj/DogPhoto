@@ -19,147 +19,123 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp">
 
-        <TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+
+            >
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="Дата" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/details_data"
+                android:editable="false"
+                style="@style/CustomEditText" />
         </TableRow>
 
         <TableRow>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="GEO" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/details_geo"
+                style="@style/CustomEditText" />
         </TableRow>
 
         <TableRow>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="Порода" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/details_poroda"
+                style="@style/CustomEditText" />
         </TableRow>
 
 
         <TableRow>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="Розмір" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/details_size"
+                style="@style/CustomEditText" />
         </TableRow>
 
 
         <TableRow>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="Масть" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/details_mast"
+                style="@style/CustomEditText" />
         </TableRow>
 
         <TableRow>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="Ошийник" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/details_oshiynik"
+                style="@style/CustomEditText" />
         </TableRow>
 
         <TableRow>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="Кличка" />
 
+
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/details_name"
+                style="@style/CustomEditText" />
         </TableRow>
 
 
         <TableRow>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="Кліпса" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/details_klipsa"
+                style="@style/CustomEditText" />
         </TableRow>
 
         <TableRow>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="Особливі прикмети" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/details_osoblivi_prikmety"
+                style="@style/CustomEditText" />
         </TableRow>
 
-        <TableRow>
+        <TableRow android:layout_height="@dimen/row_height">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                style="@style/CustomTextView"
                 android:text="Примітки" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:id="@+id/primitki"
+                style="@style/CustomEditText" />
         </TableRow>
 
         <TableRow
@@ -167,11 +143,11 @@
             android:layout_height="match_parent">
 
             <Button
-                android:text="Done"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_span="2"
                 android:layout_weight="1"
-                android:layout_span="2" />
+                android:text="Done" />
 
         </TableRow>
 

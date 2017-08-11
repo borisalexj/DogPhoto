@@ -17,6 +17,11 @@ class Constants {
 
     public static final String TAG = "_dog_photo_" ;
 
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
+    public static final String TIME_FORMAT = "HH:mm:ss";
+
+
     public static class Requests {
         public static final int REQUEST_CODE_LOCATION = 11;
         public static final int REQUEST_LOCATION = 22;

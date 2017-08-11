@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,16 +42,40 @@ import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AddDetailActivity extends AppCompatActivity {
     private String TAG = Info.TAG + this.getClass().getSimpleName();
 
     String filename;
 
+    EditText details_data;
+    EditText details_geo;
+    EditText details_size;
+    EditText details_mast;
+    EditText details_oshiynik;
+    EditText details_name;
+    EditText details_klipsa;
+    EditText details_osoblivi_prikmety;
+    EditText primitki;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_detail);
+
+        details_data = (EditText) findViewById(R.id.details_data);
+        details_geo = (EditText) findViewById(R.id.details_geo);
+        details_size = (EditText) findViewById(R.id.details_size);
+        details_mast = (EditText) findViewById(R.id.details_mast);
+        details_oshiynik = (EditText) findViewById(R.id.details_oshiynik);
+        details_name = (EditText) findViewById(R.id.details_name);
+        details_klipsa = (EditText) findViewById(R.id.details_klipsa);
+        details_osoblivi_prikmety = (EditText) findViewById(R.id.details_osoblivi_prikmety);
+        primitki = (EditText) findViewById(R.id.primitki);
+
 
         Intent incomingIntent = getIntent();
         if (incomingIntent != null) {
@@ -116,7 +141,6 @@ public class AddDetailActivity extends AppCompatActivity {
         intentFilter.addAction(intentActionName);
         intentFilter.addAction(TAG + "geocoding_result");
         registerReceiver(broadcastReceiver, intentFilter);
-
     }
 
     @Override
@@ -129,6 +153,33 @@ public class AddDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fillValues();
+
+    }
+
+    private long mCurrentDateTime;
+
+    private void fillValues() {
+        Calendar c = Calendar.getInstance();
+        Date currentDateTime = c.getTime();
+        mCurrentDateTime = currentDateTime.getTime();
+        details_data.setText(getDateTimeFromLong(mCurrentDateTime, Constants.DATE_FORMAT));
+    }
+
+
+    public static String getDateTimeFromLong(long milliSeconds, String dateFormat) {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and gpsDateTime value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 
     private MyLocationListener mNetLocationListener = new NetLocationListener(LocationManager.NETWORK_PROVIDER);
@@ -145,8 +196,8 @@ public class AddDetailActivity extends AppCompatActivity {
         public void onLocationChanged(Location location) {
             Log.i(TAG, "onLocationChanged: " + location + " gpsDateTime:" + location.getTime());
             mLastLocation.set(location);
-            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
-            // Todo - UpdateLocation
+//            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
+            details_geo.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
             updateLocation(mLastLocation);
         }
     }
@@ -157,7 +208,9 @@ public class AddDetailActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "onReceive: inside receiver");
             if (intent.getAction().equals(intentActionName)) {
-                Toast.makeText(AddDetailActivity.this, String.valueOf(intent.getStringExtra("result")), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AddDetailActivity.this, String.valueOf(intent.getStringExtra("result")), Toast.LENGTH_SHORT).show();
+                details_geo.setText(String.valueOf(intent.getStringExtra("result")));
+
             }}};
 
     private void updateLocation(Location mLastLocation) {
@@ -265,8 +318,8 @@ public class AddDetailActivity extends AppCompatActivity {
         public void onLocationChanged(Location location) {
             Log.i(TAG, "onLocationChanged: " + location + " gpsDateTime:" + location.getTime());
             mLastLocation.set(location);
-            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
-            // ToDO Update Location
+//            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
+            details_geo.setText(mLastLocation.getLatitude() + " " +  mLastLocation.getLongitude());
             updateLocation(mLastLocation);
         }
     }
