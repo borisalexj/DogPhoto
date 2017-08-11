@@ -2,5 +2,5 @@
     <dimen name="app_bar_height">385dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="row_height">32dp</dimen>
+    <dimen name="row_height">48dp</dimen>
 </resources>
