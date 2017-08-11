@@ -20,5 +20,8 @@ class Constants {
     public static class Requests {
         public static final int REQUEST_CODE_LOCATION = 11;
         public static final int REQUEST_LOCATION = 22;
+        public static final int REQUEST_FOR_CAMERA = 55;
+        public static final int REQUEST_FOR_STORAGE = 44;
     }
+
 }
