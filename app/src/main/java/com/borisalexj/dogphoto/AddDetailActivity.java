@@ -77,10 +77,34 @@ public class AddDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        makeRequestForGps();
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "onPostResume: permission denied");
+            Log.d(TAG, "onPostResume: permission check failed");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                Log.d(TAG, "onPostResume: should show toast");
+                Toast.makeText(getApplicationContext(), "GPS permission allows us to access location data. Please allow in App PppSettings for additional functionality.", Toast.LENGTH_LONG).show();
+            } else {
+                Log.d(TAG, "onPostResume: should request permission");
+            }
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, Constants.Requests.REQUEST_CODE_LOCATION);
+
+            return;
+        } else {
+            initializeLocationServices();
+        }
+
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
-        initializeLocationServices();
-
+//        initializeLocationServices();
     }
 
     @Override
