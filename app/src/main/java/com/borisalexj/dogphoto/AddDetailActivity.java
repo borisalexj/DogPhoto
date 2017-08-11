@@ -1,8 +1,10 @@
 package com.borisalexj.dogphoto;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -32,6 +34,11 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.GeocodingApiRequest;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.LatLng;
 
 import java.io.File;
 
@@ -105,12 +112,23 @@ public class AddDetailActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 //        initializeLocationServices();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(intentActionName);
+        intentFilter.addAction(TAG + "geocoding_result");
+        registerReceiver(broadcastReceiver, intentFilter);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         deinitializeLocationServices();
+        try {
+            unregisterReceiver(broadcastReceiver);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private MyLocationListener mNetLocationListener = new NetLocationListener(LocationManager.NETWORK_PROVIDER);
@@ -129,7 +147,47 @@ public class AddDetailActivity extends AppCompatActivity {
             mLastLocation.set(location);
             Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
             // Todo - UpdateLocation
+            updateLocation(mLastLocation);
         }
+    }
+
+    private String intentActionName = TAG + "reverse_geocoding_result";
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive: inside receiver");
+            if (intent.getAction().equals(intentActionName)) {
+                Toast.makeText(AddDetailActivity.this, String.valueOf(intent.getStringExtra("result")), Toast.LENGTH_SHORT).show();
+            }}};
+
+    private void updateLocation(Location mLastLocation) {
+        Log.d(TAG, "updateLocation: ");
+
+        GeoApiContext context;
+        context = new GeoApiContext().setApiKey(this.getResources().getString(R.string.google_geocoding_key));
+        GeocodingApiRequest req = GeocodingApi.reverseGeocode(context, new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+
+        req.setCallback(new com.google.maps.PendingResult.Callback<GeocodingResult[]>() {
+            @Override
+            public void onResult(GeocodingResult[] result) {
+                Log.d(TAG, "onResult: ");
+                // Handle successful request.
+
+                Log.d(TAG, "geocoding successful");
+                Log.d(TAG, result[0].formattedAddress);
+//                System.out.println(result[0].formattedAddress);
+                Intent intent = new Intent(intentActionName);
+                intent.putExtra("result", result[0].formattedAddress);
+                sendBroadcast(intent);
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+                // Handle error.
+                Log.d(TAG, "geocoding error");
+            }
+        });
+
     }
 
     public void makeRequestForGps() {
@@ -209,6 +267,7 @@ public class AddDetailActivity extends AppCompatActivity {
             mLastLocation.set(location);
             Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
             // ToDO Update Location
+            updateLocation(mLastLocation);
         }
     }
 

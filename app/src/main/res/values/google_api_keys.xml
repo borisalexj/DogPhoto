@@ -2,9 +2,9 @@
 <resources>
 
             <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-          AIzaSyD3Ide3gdOkkUClvtvW_J3-cl4f5i_yhxc
+          AIzaSyCQrK-tXFhwMOwPYxh5ceTOlBmiMkX5EPo
     </string>
-    <string name="google_geocoding_key">"AIzaSyD8j7xyIinI40AgoPVsdVZI1rrlm2FiQpk"</string>
+    <string name="google_geocoding_key">"AIzaSyCQrK-tXFhwMOwPYxh5ceTOlBmiMkX5EPo"</string>
 
 
 </resources>
