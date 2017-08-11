@@ -8,7 +8,7 @@
     tools:context="com.borisalexj.dogphoto.MainActivity">
 
     <SurfaceView
-        android:id="@+id/photoPreviewSurface"
+        android:id="@+id/photo_preview_surface"
         android:layout_width="385dp"
         android:layout_height="385dp"
         android:layout_alignParentLeft="true"
