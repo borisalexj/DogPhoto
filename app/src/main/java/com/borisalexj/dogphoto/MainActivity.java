@@ -1,6 +1,7 @@
 package com.borisalexj.dogphoto;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.media.Image;
@@ -35,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
     File photoFile;
     File videoFile;
-
+    SurfaceHolder holder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         File pictures = Environment
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -50,7 +52,11 @@ public class MainActivity extends AppCompatActivity {
 
         preview = (SurfaceView) findViewById(R.id.photo_preview_surface);
 
-        SurfaceHolder holder = preview.getHolder();
+
+    }
+
+    private void showCameraPreview() {
+        holder = preview.getHolder();
         holder.addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -132,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         askPermissionForCamera();
         askPermissionForStorage();
     }
@@ -197,17 +202,20 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{android.Manifest.permission.CAMERA},
                         Constants.Requests.REQUEST_FOR_CAMERA);
             } else {
+                Log.d(TAG, "askPermissionForCamera: 1");
                 resumeCamera();
+                showCameraPreview();
             }
         } else {
+            Log.d(TAG, "askPermissionForCamera: 2");
             resumeCamera();
+            showCameraPreview();
         }
 
     }
 
     private void resumeCamera() {
         camera = Camera.open();
-
     }
 
     @Override
@@ -232,7 +240,10 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == Constants.Requests.REQUEST_FOR_CAMERA) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Now user should be able to use camera
+                Log.d(TAG, "askPermissionForCamera: 3");
+
                 resumeCamera();
+                showCameraPreview();
             } else {
                 // Your app will not have this permission. Turn off all functions
                 // that require this permission or it will force close like your
