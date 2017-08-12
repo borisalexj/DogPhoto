@@ -1,10 +1,10 @@
 package com.borisalexj.dogphoto;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.media.Image;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
@@ -26,7 +26,7 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class CameraActivity extends AppCompatActivity {
 
     private String TAG = Info.TAG + this.getClass().getSimpleName();
 
@@ -39,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
     SurfaceHolder holder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_camera);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         File pictures = Environment
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showCameraPreview() {
+        Log.d(TAG, "showCameraPreview: ");
         holder = preview.getHolder();
         holder.addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -137,20 +139,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "onResume: ");
         super.onResume();
+//        askPermissionForStorage();
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        Log.d(TAG, "onPostResume: ");
+        super.onPostResume();
         askPermissionForCamera();
-        askPermissionForStorage();
+
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d(TAG, "onStart: ");
+        super.onStart();
     }
 
     private void askPermissionForStorage() {
+        Log.d(TAG, "askPermissionForStorage: ");
         if (Build.VERSION.SDK_INT >= 23) {
 // Here, thisActivity is the current activity
-            if (ContextCompat.checkSelfPermission(MainActivity.this,
+            if (ContextCompat.checkSelfPermission(CameraActivity.this,
                     android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
 
                 // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                if (ActivityCompat.shouldShowRequestPermissionRationale(CameraActivity.this,
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     // Show an expanation to the user *asynchronously* -- don't block
                     // this thread waiting for the user's response! After the user
@@ -163,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                     // app-defined int constant. The callback method gets the
                     // result of the request.
                 }
-                ActivityCompat.requestPermissions(MainActivity.this,
+                ActivityCompat.requestPermissions(CameraActivity.this,
                         new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         Constants.Requests.REQUEST_FOR_STORAGE);
             } else {
@@ -176,14 +194,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void askPermissionForCamera(){
-
+        Log.d(TAG, "askPermissionForCamera: ");
         if (Build.VERSION.SDK_INT >= 23) {
 // Here, thisActivity is the current activity
-            if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.CAMERA)
-                    != PackageManager.PERMISSION_GRANTED) {
+            if ((ContextCompat.checkSelfPermission(CameraActivity.this, android.Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) || (
+                    (ContextCompat.checkSelfPermission(CameraActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED)
+            )) {
 
                 // Should we show an explanation?
-                if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                if (ActivityCompat.shouldShowRequestPermissionRationale(CameraActivity.this,
                         android.Manifest.permission.CAMERA)
                         ) {
                     Toast.makeText(getApplicationContext(), "Accessing a camera allows us to use a camera for check-in. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
@@ -198,8 +219,8 @@ public class MainActivity extends AppCompatActivity {
                     // app-defined int constant. The callback method gets the
                     // result of the request.
                 }
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{android.Manifest.permission.CAMERA},
+                ActivityCompat.requestPermissions(CameraActivity.this,
+                        new String[]{android.Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         Constants.Requests.REQUEST_FOR_CAMERA);
             } else {
                 Log.d(TAG, "askPermissionForCamera: 1");
@@ -215,12 +236,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resumeCamera() {
+        Log.d(TAG, "resumeCamera: ");
         camera = Camera.open();
+        camera.setDisplayOrientation(90);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
         Log.d(TAG, "onRequestPermissionsResult: ");
 
         if (requestCode == Constants.Requests.REQUEST_FOR_STORAGE) {
@@ -242,8 +264,10 @@ public class MainActivity extends AppCompatActivity {
                 // Now user should be able to use camera
                 Log.d(TAG, "askPermissionForCamera: 3");
 
-                resumeCamera();
-                showCameraPreview();
+//                resumeCamera();
+//                showCameraPreview();
+//                resumeCamera();
+//                showCameraPreview();
             } else {
                 // Your app will not have this permission. Turn off all functions
                 // that require this permission or it will force close like your
@@ -256,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        Log.d(TAG, "onPause: ");
         super.onPause();
         if (camera != null)
             camera.release();
@@ -272,8 +297,8 @@ public class MainActivity extends AppCompatActivity {
                     FileOutputStream fos = new FileOutputStream(photoFile);
                     fos.write(data);
                     fos.close();
-                    Intent intent = new Intent(MainActivity.this, AddDetailActivity.class);
-                    intent.putExtra("filename", Utils.transformImage(MainActivity.this,photoFile.getCanonicalPath(), 1024, 1024));
+                    Intent intent = new Intent(CameraActivity.this, AddDetailActivity.class);
+                    intent.putExtra("filename", Utils.transformImage(CameraActivity.this, photoFile.getCanonicalPath(), 1024, 1024));
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -285,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void goToListClick(View view) {
+        Log.d(TAG, "goToListClick: ");
         startActivity(new Intent(this, MapsActivity.class));
     }
 }
