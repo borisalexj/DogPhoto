@@ -62,6 +62,9 @@ public class Utils {
             int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
                     ExifInterface.ORIENTATION_UNDEFINED);
             switch (orientation) {
+                case ExifInterface.ORIENTATION_UNDEFINED:
+                    out_bmp = rotateImage(out_bmp, 90);
+                    break;
                 case ExifInterface.ORIENTATION_ROTATE_90:
                     out_bmp = rotateImage(out_bmp, 90);
                     break;

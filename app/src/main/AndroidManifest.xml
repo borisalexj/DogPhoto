@@ -33,7 +33,6 @@
         <activity
             android:name=".AddDetailActivity"
             android:label="@string/title_activity_add_detail"
-            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <service
