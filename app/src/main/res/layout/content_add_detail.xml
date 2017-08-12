@@ -14,14 +14,16 @@
     <!--android:layout_margin="@dimen/text_margin"-->
     <!--android:text="@string/large_text" />-->
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:orientation="vertical">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
 
             >
 
@@ -31,22 +33,43 @@
 
             <EditText
                 android:id="@+id/details_data"
-                android:editable="false"
-                style="@style/CustomEditText" />
-        </TableRow>
+                style="@style/CustomEditText"
+                android:editable="false" />
+        </LinearLayout>
 
-        <TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
+
+            >
 
             <TextView
                 style="@style/CustomTextView"
                 android:text="GEO" />
 
             <EditText
+                android:editable="false"
                 android:id="@+id/details_geo"
                 style="@style/CustomEditText" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
+
+            >
 
             <TextView
                 style="@style/CustomTextView"
@@ -55,10 +78,18 @@
             <EditText
                 android:id="@+id/details_poroda"
                 style="@style/CustomEditText" />
-        </TableRow>
+        </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
 
-        <TableRow>
+            >
 
             <TextView
                 style="@style/CustomTextView"
@@ -67,32 +98,77 @@
             <EditText
                 android:id="@+id/details_size"
                 style="@style/CustomEditText" />
-        </TableRow>
+        </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
 
-        <TableRow>
+            >
 
             <TextView
+
                 style="@style/CustomTextView"
                 android:text="Масть" />
 
             <EditText
+                android:layout_weight="0"
                 android:id="@+id/details_mast"
                 style="@style/CustomEditText" />
-        </TableRow>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
 
-        <TableRow>
+            >
 
             <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
                 style="@style/CustomTextView"
                 android:text="Ошийник" />
 
-            <EditText
-                android:id="@+id/details_oshiynik"
-                style="@style/CustomEditText" />
-        </TableRow>
+            <CheckBox
+                android:id="@+id/details_oshiynik_checkBox"
+                android:layout_weight="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <TableRow>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/details_oshiynk_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
+            >
+
+
+            <EditText
+                android:id="@+id/details_oshiynik_edittext"
+                style="@style/CustomEditText" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
+
+            >
 
             <TextView
                 style="@style/CustomTextView"
@@ -102,21 +178,55 @@
             <EditText
                 android:id="@+id/details_name"
                 style="@style/CustomEditText" />
-        </TableRow>
+        </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
 
-        <TableRow>
+            >
 
             <TextView
                 style="@style/CustomTextView"
+                android:layout_weight="1"
                 android:text="Кліпса" />
 
-            <EditText
-                android:id="@+id/details_klipsa"
-                style="@style/CustomEditText" />
-        </TableRow>
+            <CheckBox
+                android:id="@+id/details_klipsa_checkBox"
+                android:layout_weight="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <TableRow>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/details_klipsa_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
+
+            >
+
+            <EditText
+                android:id="@+id/details_klipsa_editext"
+                style="@style/CustomEditText" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
+
+            >
 
             <TextView
                 style="@style/CustomTextView"
@@ -125,9 +235,17 @@
             <EditText
                 android:id="@+id/details_osoblivi_prikmety"
                 style="@style/CustomEditText" />
-        </TableRow>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
 
-        <TableRow android:layout_height="@dimen/row_height">
+            >
 
             <TextView
                 style="@style/CustomTextView"
@@ -136,11 +254,17 @@
             <EditText
                 android:id="@+id/primitki"
                 style="@style/CustomEditText" />
-        </TableRow>
-
-        <TableRow
+        </LinearLayout>
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:orientation="horizontal"
+
+            >
 
             <Button
                 android:layout_width="match_parent"
@@ -149,8 +273,8 @@
                 android:layout_weight="1"
                 android:text="Done" />
 
-        </TableRow>
+        </LinearLayout>
 
-    </TableLayout>
+    </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

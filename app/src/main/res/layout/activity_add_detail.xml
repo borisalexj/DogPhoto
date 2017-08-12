@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/white"
     tools:context="com.borisalexj.dogphoto.AddDetailActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -17,7 +18,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="385dp"
+            android:layout_height="390dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -25,7 +26,8 @@
             <ImageView
                 android:id="@+id/detail_image_view"
                 android:layout_width="match_parent"
-                android:layout_height="385dp" />
+                android:layout_height="390dp"
+                android:scaleType="centerCrop" />
 
             <!--<android.support.v7.widget.Toolbar-->
                 <!--android:id="@+id/toolbar"-->
@@ -37,8 +39,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_add_detail" />
-
     <android.support.design.widget.FloatingActionButton
         android:visibility="gone"
         android:id="@+id/fab"
@@ -48,5 +48,7 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <include layout="@layout/content_add_detail" />
 
 </android.support.design.widget.CoordinatorLayout>

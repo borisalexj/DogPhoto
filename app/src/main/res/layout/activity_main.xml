@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/black"
     tools:context="com.borisalexj.dogphoto.MainActivity">
 
     <SurfaceView
@@ -15,26 +16,99 @@
         android:layout_alignParentTop="true"/>
 
     <LinearLayout
+
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:text="done"
-            android:layout_weight="1"
+        <!--<Button-->
+            <!--android:text="done"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<Button-->
+            <!--android:onClick="makePhotoClick"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="make"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<Button-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="skip"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+
+        <LinearLayout
+            android:background="@color/black"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <Button
-            android:onClick="makePhotoClick"
-            android:layout_weight="1"
-            android:text="make"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <Button
-            android:layout_weight="1"
-            android:text="skip"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="150dp"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/business_users_count_TextView"
+                    style="@style/BusinessSmallRounds"
+                    android:layout_gravity="center|center_vertical|center_horizontal"
+                    android:text="Done" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/business_logo_ImageView"
+                    android:layout_width="@dimen/business_logo_size"
+                    android:layout_height="@dimen/business_logo_size"
+                    android:background="@drawable/business_big_image_shape"
+                    android:scaleType="fitXY"
+                    app:riv_border_color="@android:color/white"
+                    app:riv_border_width="@dimen/business_rounded_image_stroke"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="true"
+                    app:riv_tile_mode="repeat"
+                    app:riv_tile_mode_x="clamp"
+                    android:onClick="onClickPicture"
+                    app:riv_tile_mode_y="clamp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/business_sprouts_count_TextView"
+                    style="@style/BusinessSmallRounds"
+                    android:onClick="BusinessOpenSproutsHistoryClick"
+                    android:text="List" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

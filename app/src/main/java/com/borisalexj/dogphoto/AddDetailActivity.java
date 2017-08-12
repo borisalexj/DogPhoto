@@ -21,6 +21,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -61,6 +63,9 @@ public class AddDetailActivity extends AppCompatActivity {
     EditText details_osoblivi_prikmety;
     EditText primitki;
 
+    CheckBox details_oshiynik_checkBox;
+    CheckBox details_klipsa_checkBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +75,38 @@ public class AddDetailActivity extends AppCompatActivity {
         details_geo = (EditText) findViewById(R.id.details_geo);
         details_size = (EditText) findViewById(R.id.details_size);
         details_mast = (EditText) findViewById(R.id.details_mast);
-        details_oshiynik = (EditText) findViewById(R.id.details_oshiynik);
+        details_oshiynik = (EditText) findViewById(R.id.details_oshiynik_edittext);
         details_name = (EditText) findViewById(R.id.details_name);
-        details_klipsa = (EditText) findViewById(R.id.details_klipsa);
+        details_klipsa = (EditText) findViewById(R.id.details_klipsa_editext);
         details_osoblivi_prikmety = (EditText) findViewById(R.id.details_osoblivi_prikmety);
         primitki = (EditText) findViewById(R.id.primitki);
 
+        details_oshiynik_checkBox = (CheckBox) findViewById(R.id.details_oshiynik_checkBox);
+
+        details_oshiynik_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    (findViewById(R.id.details_oshiynk_layout)).setVisibility(View.VISIBLE);
+                } else {
+                    (findViewById(R.id.details_oshiynk_layout)).setVisibility(View.GONE);
+
+                }
+            }
+        });
+
+        details_klipsa_checkBox = (CheckBox) findViewById(R.id.details_klipsa_checkBox);
+        details_klipsa_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    (findViewById(R.id.details_klipsa_layout)).setVisibility(View.VISIBLE);
+                } else {
+                    (findViewById(R.id.details_klipsa_layout)).setVisibility(View.GONE);
+
+                }
+            }
+        });
 
         Intent incomingIntent = getIntent();
         if (incomingIntent != null) {
@@ -211,7 +242,9 @@ public class AddDetailActivity extends AppCompatActivity {
 //                Toast.makeText(AddDetailActivity.this, String.valueOf(intent.getStringExtra("result")), Toast.LENGTH_SHORT).show();
                 details_geo.setText(String.valueOf(intent.getStringExtra("result")));
 
-            }}};
+            }
+        }
+    };
 
     private void updateLocation(Location mLastLocation) {
         Log.d(TAG, "updateLocation: ");
@@ -319,7 +352,7 @@ public class AddDetailActivity extends AppCompatActivity {
             Log.i(TAG, "onLocationChanged: " + location + " gpsDateTime:" + location.getTime());
             mLastLocation.set(location);
 //            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
-            details_geo.setText(mLastLocation.getLatitude() + " " +  mLastLocation.getLongitude());
+            details_geo.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
             updateLocation(mLastLocation);
         }
     }
@@ -382,8 +415,6 @@ public class AddDetailActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
 
 }

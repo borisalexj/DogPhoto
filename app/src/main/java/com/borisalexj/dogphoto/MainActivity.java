@@ -3,6 +3,7 @@ package com.borisalexj.dogphoto;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.media.Image;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
@@ -10,10 +11,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.io.File;
@@ -25,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String TAG = Info.TAG + this.getClass().getSimpleName();
 
-    SurfaceView surfaceView;
+    SurfaceView preview;
     Camera camera;
     MediaRecorder mediaRecorder;
 
@@ -44,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
         photoFile = new File(pictures, imageFileName + ".jpg");
         videoFile = new File(pictures, "myvideo.3gp");
 
-        surfaceView = (SurfaceView) findViewById(R.id.photo_preview_surface);
+        preview = (SurfaceView) findViewById(R.id.photo_preview_surface);
 
-        SurfaceHolder holder = surfaceView.getHolder();
+        SurfaceHolder holder = preview.getHolder();
         holder.addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -54,6 +58,54 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     camera.setPreviewDisplay(holder);
                     camera.startPreview();
+
+                    ViewGroup.LayoutParams params = preview.getLayoutParams();
+
+                    Camera.Parameters parameters = camera.getParameters();
+//            parameters.setPreviewSize(256,256);
+//            mCamera.setParameters(parameters);
+                    Camera.Size size = parameters.getPreviewSize();
+
+                    float k = (float) size.width / (float) size.height;
+
+                    Display display = getWindowManager().getDefaultDisplay();
+                    DisplayMetrics outMetrics = new DisplayMetrics();
+                    display.getMetrics(outMetrics);
+
+                    float density = getResources().getDisplayMetrics().density;
+                    float dpWidth = outMetrics.widthPixels;// / density;
+                    float dpHeight = outMetrics.heightPixels;// / density;
+
+//            Log.d(TAG, "onCreate: density  " + String.valueOf(density));
+//            Log.d(TAG, "onCreate: dpWidth  " + String.valueOf(dpWidth));
+//            Log.d(TAG, "onCreate: dpHeight " + String.valueOf(dpHeight));
+//            Log.d(TAG, "onCreate: k        " + String.valueOf(k));
+//            Log.d(TAG, "onCreate: /        " + String.valueOf(dpWidth/(float) k));
+
+//            if (size.width < size.height){
+//                Log.d(TAG, "resumeCamera: 1");
+//            params.width=Integer.valueOf(Math.round(dpWidth));
+//            params.height=Integer.valueOf(Math.round(dpWidth/(float) k));
+//            } else {
+//                Log.d(TAG, "resumeCamera: 2");
+//                params.width=Integer.valueOf(Math.round(dpWidth));
+//                params.height=Integer.valueOf(Math.round(dpHeight));
+//            }
+
+                    try {
+                        params.width = Integer.valueOf(Math.round(dpWidth));
+                        params.height = Integer.valueOf(Math.round(dpWidth * k));
+                    } catch (NumberFormatException e) {
+                        Log.d(TAG, "resumeCamera: ");
+                    }
+//
+                    preview.setLayoutParams(params);
+
+//            codeImage = new Image(379, 379, "Y800");
+//                    codeImage = new Image(size.width, size.height, "Y800");
+//                    previewing = true;
+                    preview.refreshDrawableState();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -68,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
             public void surfaceDestroyed(SurfaceHolder holder) {
             }
         });
+
+
     }
 
     public void makePhotoClick(View view) {
@@ -208,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                     fos.write(data);
                     fos.close();
                     Intent intent = new Intent(MainActivity.this, AddDetailActivity.class);
-                    intent.putExtra("filename", photoFile.getCanonicalPath());
+                    intent.putExtra("filename", Utils.transformImage(MainActivity.this,photoFile.getCanonicalPath(), 1024, 1024));
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
