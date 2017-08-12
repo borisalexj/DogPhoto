@@ -1,8 +1,10 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.geolocation;
 
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.borisalexj.dogphoto.util.Constants;
 
 /**
  * Created by user on 8/11/2017.

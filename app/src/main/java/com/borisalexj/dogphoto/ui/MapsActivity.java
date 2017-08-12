@@ -1,33 +1,34 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.ui;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.borisalexj.dogphoto.R;
+import com.borisalexj.dogphoto.db.DogOrm;
+import com.borisalexj.dogphoto.models.DogModel;
+import com.borisalexj.dogphoto.ui.adapters.DogsRecyclerViewAdapter;
+import com.borisalexj.dogphoto.util.Constants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     String TAG = Constants.TAG + this.getClass().getSimpleName();
-
+    private RecyclerView mRecyclerView;
+    private LatLng mLatLng;
     private GoogleMap mMap;
-    RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private DogsRecyclerViewAdapter mAdapter;
     private ArrayList<DogModel> mDogsList;
-    LatLng latLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Intent incomingIntent = getIntent();
         if (incomingIntent != null) {
-            latLng = new LatLng(
+            mLatLng = new LatLng(
                     incomingIntent.getDoubleExtra("lat", 0),
                     incomingIntent.getDoubleExtra("lng", 0));
         }
@@ -48,7 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         mLinearLayoutManager = new LinearLayoutManager(this);
-        mDogsList = (new DogOrm(this, TAG)).getPointsFromDb();
+        mDogsList = (new DogOrm(this, TAG)).getDogsFrom();
         mAdapter = new DogsRecyclerViewAdapter(this, mDogsList);
 
 //        mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -56,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mRecyclerView.setAdapter(mAdapter);
 
 
-        Log.d(TAG, "onCreate: " + (new DogOrm(this, TAG)).getPointsFromDb());
+        Log.d(TAG, "onCreate: " + (new DogOrm(this, TAG)).getDogsFrom());
 
     }
 
@@ -97,13 +98,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        if (latLng == null) {
-            latLng = new LatLng(-34, 151);
+        if (mLatLng == null) {
+            mLatLng = new LatLng(-34, 151);
         }
 
-//        mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Constants.INITIAL_MAP_ZOOM_LEVEL));
+//        mMap.addMarker(new MarkerOptions().position(mLatLng).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(mLatLng));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, Constants.INITIAL_MAP_ZOOM_LEVEL));
+
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
 
     }
 }

@@ -1,6 +1,8 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.models;
 
 import android.content.ContentValues;
+
+import com.borisalexj.dogphoto.db.DogDatabase;
 
 /**
  * Created by user on 8/12/2017.
@@ -23,34 +25,6 @@ public class DogModel {
     private String prikmety;
     private String primitki;
 
-    public int get_id() {
-        return _id;
-    }
-
-    public String getPoroda() {
-        return poroda;
-    }
-
-    public void setPoroda(String poroda) {
-        this.poroda = poroda;
-    }
-
-    public DogModel(String photo, String date, String address, String poroda, String lat, String lng, String size, String mast, String oshiynik, String name, String klipsa, String prikmety, String primitki) {
-        this.photo = photo;
-        this.date = date;
-        this.address = address;
-        this.poroda = poroda;
-        this.lat = lat;
-        this.lng = lng;
-        this.size = size;
-        this.mast = mast;
-        this.oshiynik = oshiynik;
-        this.name = name;
-        this.klipsa = klipsa;
-        this.prikmety = prikmety;
-        this.primitki = primitki;
-    }
-
     public DogModel(int _id, String photo, String date, String address, String poroda, String lat, String lng, String size, String mast, String oshiynik, String name, String klipsa, String prikmety, String primitki) {
         this._id = _id;
         this.photo = photo;
@@ -68,24 +42,23 @@ public class DogModel {
         this.primitki = primitki;
     }
 
-    public DogModel(int _id, String photo, String date, String address, String lat, String lng, String size, String mast, String oshiynik, String name, String klipsa, String prikmety, String primitki) {
-        this._id = _id;
-        this.photo = photo;
-        this.date = date;
-        this.address = address;
-        this.lat = lat;
-        this.lng = lng;
-        this.size = size;
-        this.mast = mast;
-        this.oshiynik = oshiynik;
-        this.name = name;
-        this.klipsa = klipsa;
-        this.prikmety = prikmety;
-        this.primitki = primitki;
+    public DogModel() {
+    }
+
+    public int get_id() {
+        return _id;
     }
 
     public void set_id(int _id) {
         this._id = _id;
+    }
+
+    public String getPoroda() {
+        return poroda;
+    }
+
+    public void setPoroda(String poroda) {
+        this.poroda = poroda;
     }
 
     public String getPhoto() {
@@ -103,10 +76,6 @@ public class DogModel {
     public void setSize(String size) {
         this.size = size;
     }
-
-    public DogModel() {
-    }
-
 
     public String getDate() {
         return date;
@@ -204,21 +173,6 @@ public class DogModel {
         contentValues.put(DogDatabase.DatabaseContract.DataColumns.PRIKMETY, klipsa);
         contentValues.put(DogDatabase.DatabaseContract.DataColumns.PRIMITKI, prikmety);
         return contentValues;
-    }
-
-    public DogModel(String photo, String date, String address, String lat, String lng, String size, String mast, String oshiynik, String name, String klipsa, String prikmety, String primitki) {
-        this.photo = photo;
-        this.date = date;
-        this.address = address;
-        this.lat = lat;
-        this.lng = lng;
-        this.size = size;
-        this.mast = mast;
-        this.oshiynik = oshiynik;
-        this.name = name;
-        this.klipsa = klipsa;
-        this.prikmety = prikmety;
-        this.primitki = primitki;
     }
 
     @Override

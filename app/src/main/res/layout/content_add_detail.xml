@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.borisalexj.dogphoto.AddDetailActivity"
-    tools:showIn="@layout/activity_add_detail">
+                                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            xmlns:tools="http://schemas.android.com/tools"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                                            tools:context="com.borisalexj.dogphoto.ui.AddDetailActivity"
+                                            tools:showIn="@layout/activity_add_detail">
 
     <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
 
@@ -32,12 +32,12 @@
 
             <TextView
                 style="@style/CustomTextView"
-                android:text="Дата" />
+                android:text="Дата"/>
 
             <EditText
                 android:id="@+id/add_details_date"
                 style="@style/CustomEditText"
-                android:editable="false" />
+                android:editable="false"/>
         </LinearLayout>
 
         <View
@@ -54,12 +54,12 @@
 
             <TextView
                 style="@style/CustomTextView"
-                android:text="Адреса" />
+                android:text="Адреса"/>
 
             <EditText
-                android:editable="false"
                 android:id="@+id/add_details_geo"
-                style="@style/CustomEditText" />
+                style="@style/CustomEditText"
+                android:editable="false"/>
         </LinearLayout>
 
         <View
@@ -76,17 +76,18 @@
 
             <TextView
                 style="@style/CustomTextView"
-                android:text="Порода" />
+                android:text="Порода"/>
 
             <EditText
                 android:id="@+id/add_details_poroda"
-                style="@style/CustomEditText" />
+                style="@style/CustomEditText"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
@@ -96,17 +97,18 @@
 
             <TextView
                 style="@style/CustomTextView"
-                android:text="Розмір" />
+                android:text="Розмір"/>
 
             <EditText
                 android:id="@+id/add_details_size"
-                style="@style/CustomEditText" />
+                style="@style/CustomEditText"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
@@ -117,58 +119,62 @@
             <TextView
 
                 style="@style/CustomTextView"
-                android:text="Масть" />
+                android:text="Масть"/>
 
             <EditText
-                android:layout_weight="0"
                 android:id="@+id/add_details_mast"
-                style="@style/CustomEditText" />
+                style="@style/CustomEditText"
+                android:layout_weight="0"/>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider"/>
+
         <LinearLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
+            android:background="@color/white"
             android:orientation="horizontal"
 
             >
 
             <TextView
-                android:layout_weight="1"
-                android:layout_width="match_parent"
                 style="@style/CustomTextView"
-                android:text="Ошийник" />
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="Ошийник"/>
 
             <CheckBox
-                android:paddingRight="16dp"
-                android:background="@color/white"
                 android:id="@+id/add_details_oshiynik_checkBox"
-                android:layout_weight="0"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@color/white"
+                android:paddingRight="16dp"/>
 
         </LinearLayout>
+
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/add_details_oshiynk_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
             android:orientation="horizontal"
+            android:visibility="gone"
             >
 
 
             <EditText
                 android:id="@+id/add_details_oshiynik_edittext"
-                style="@style/CustomEditText" />
+                style="@style/CustomEditText"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
@@ -178,22 +184,23 @@
 
             <TextView
                 style="@style/CustomTextView"
-                android:text="Кличка" />
+                android:text="Кличка"/>
 
 
             <EditText
                 android:id="@+id/add_details_name"
-                style="@style/CustomEditText" />
+                style="@style/CustomEditText"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider"/>
+
         <LinearLayout
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
+            android:background="@color/white"
             android:orientation="horizontal"
 
             >
@@ -201,34 +208,37 @@
             <TextView
                 style="@style/CustomTextView"
                 android:layout_weight="1"
-                android:text="Кліпса" />
+                android:text="Кліпса"/>
 
             <CheckBox
-                android:paddingRight="16dp"
                 android:id="@+id/add_details_klipsa_checkBox"
-                android:layout_weight="0"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:paddingRight="16dp"/>
 
         </LinearLayout>
+
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/add_details_klipsa_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
             android:orientation="horizontal"
+            android:visibility="gone"
 
             >
 
             <EditText
                 android:id="@+id/add_details_klipsa_editext"
-                style="@style/CustomEditText" />
+                style="@style/CustomEditText"/>
 
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
@@ -238,16 +248,18 @@
 
             <TextView
                 style="@style/CustomTextView"
-                android:text="Особливі прикмети" />
+                android:text="Особливі прикмети"/>
 
             <EditText
                 android:id="@+id/add_details_osoblivi_prikmety"
-                style="@style/CustomEditText" />
+                style="@style/CustomEditText"/>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
@@ -257,35 +269,37 @@
 
             <TextView
                 style="@style/CustomTextView"
-                android:text="Примітки" />
+                android:text="Примітки"/>
 
             <EditText
                 android:id="@+id/add_details_primitki"
-                style="@style/CustomEditText" />
+                style="@style/CustomEditText"/>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider"/>
+
         <LinearLayout
-            android:background="@color/white"
-            android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
+            android:background="@color/white"
             android:orientation="horizontal"
+            android:padding="8dp"
 
             >
 
             <Button
                 android:id="@+id/add_detail_done_button"
-                android:enabled="false"
-                android:onClick="detailsDoneClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_span="2"
                 android:layout_weight="1"
                 android:background="#F4ECE4"
-                android:text="Фініш" />
+                android:enabled="false"
+                android:onClick="detailsDoneClick"
+                android:text="Фініш"/>
 
         </LinearLayout>
 

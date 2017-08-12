@@ -1,4 +1,4 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.geolocation;
 
 import android.Manifest;
 import android.app.Service;
@@ -18,6 +18,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.borisalexj.dogphoto.util.Constants;
+
 /**
  * Created by user on 8/11/2017.
  */
@@ -27,7 +29,7 @@ public class GeolocationService extends Service {
      * Target we publish for clients to send messages to IncomingHandler.
      */
     final Messenger mMessenger = new Messenger(new IncomingHandler());
-    private String TAG = Info.TAG + this.getClass().getSimpleName() + " " + this.hashCode() + " ";
+    private String TAG = Constants.TAG + this.getClass().getSimpleName() + " " + this.hashCode() + " ";
     private LocationListener mNetLocationListener = new GeolocationService.NetLocationListener(LocationManager.NETWORK_PROVIDER);
     private LocationListener mGpsLocationListener = new GeolocationService.GpsLocationListener(LocationManager.GPS_PROVIDER);
     private LocationManager mGpsLocationManager = null;
@@ -214,8 +216,6 @@ public class GeolocationService extends Service {
             Log.i(TAG, "onStatusChanged: " + provider);
         }
     }
-
-
 
 
 }

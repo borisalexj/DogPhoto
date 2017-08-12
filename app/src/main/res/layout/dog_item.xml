@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:background="@color/black"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@color/black"
+              android:orientation="vertical"
+              android:padding="8dp">
 
     <ImageView
         android:id="@+id/dog_item_photo"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        tools:src="@mipmap/ic_launcher" />
+        tools:src="@mipmap/ic_launcher"/>
 
     <Button
         android:id="@+id/dog_item_details_button"
-        android:layout_marginTop="4dp"
         android:layout_width="100dp"
         android:layout_height="30dp"
+        android:layout_marginTop="4dp"
         android:background="#F4ECE4"
-        android:text="Деталі" />
+        android:text="Деталі"/>
 </LinearLayout>

@@ -1,10 +1,10 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.util;
 
 /**
  * Created by user on 8/11/2017.
  */
 
-class Constants {
+public class Constants {
     public static final int RADIUS = 3000;
     public static final int START_ITEM_COUNT = 10;
 
@@ -15,7 +15,7 @@ class Constants {
     public static final int MSG_START_GEOLOCATION = 1;
     public static final String INTENT_GOT_LOCATION = "INTENT_GOT_LOCATION";
 
-    public static final String TAG = "_dog_photo_" ;
+    public static final String TAG = "_dog_photo_";
 
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT = "yyyy-MM-dd";

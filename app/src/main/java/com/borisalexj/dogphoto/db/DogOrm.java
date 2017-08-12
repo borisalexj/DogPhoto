@@ -1,9 +1,12 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.db;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.borisalexj.dogphoto.models.DogModel;
+import com.borisalexj.dogphoto.util.Constants;
 
 import java.util.ArrayList;
 
@@ -37,7 +40,7 @@ public class DogOrm {
     }
 
     public DogModel getDog(int _id) {
-        Log.d(TAG, "getUnsentPoints: ");
+        Log.d(TAG, "getDog: ");
         DogDatabase dogDb = new DogDatabase(mContext);
         SQLiteDatabase sqLiteDogDb = dogDb.getReadableDatabase();
 
@@ -45,7 +48,7 @@ public class DogOrm {
         String[] selectionArgs = new String[]{String.valueOf(_id)};
         Cursor cursor = sqLiteDogDb.query(DogDatabase.DatabaseContract.DATA_TABLE_NAME,
                 null, selection, selectionArgs, null, null, null);
-        Log.d(TAG, "getUnsentPoints: cursor_size - " + String.valueOf(cursor.getCount()));
+        Log.d(TAG, "getDog: cursor_size - " + String.valueOf(cursor.getCount()));
         cursor.moveToFirst();
         DogModel dm = new DogModel();
         if (cursor.getCount() != 0) {
@@ -72,15 +75,15 @@ public class DogOrm {
 
     }
 
-    public ArrayList<DogModel> getPointsFromDb() {
+    public ArrayList<DogModel> getDogsFrom() {
         ArrayList<DogModel> dogsArray = new ArrayList<>();
-        Log.d(TAG, "getPointsFromDb: ");
+        Log.d(TAG, "getDogsFrom: ");
         DogDatabase dogDb = new DogDatabase(mContext);
         SQLiteDatabase sqLiteDogDb = dogDb.getReadableDatabase();
 
         Cursor cursor = sqLiteDogDb.query(DogDatabase.DatabaseContract.DATA_TABLE_NAME,
                 null, null, null, null, null, DogDatabase.DatabaseContract.DataColumns._ID + " DESC");
-        Log.d(TAG, "getPointsFromDb: cursor_size - " + String.valueOf(cursor.getCount()));
+        Log.d(TAG, "getDogsFrom: cursor_size - " + String.valueOf(cursor.getCount()));
         cursor.moveToFirst();
         dogsArray.clear();
         if (cursor.getCount() != 0) {
@@ -102,7 +105,7 @@ public class DogOrm {
                         cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.PRIMITKI))
                 ));
             } while (cursor.moveToNext());
-            Log.d(TAG, "getPointsFromDb: array_size - " + String.valueOf(dogsArray.size()));
+            Log.d(TAG, "getDogsFrom: array_size - " + String.valueOf(dogsArray.size()));
         }
         sqLiteDogDb.close();
         dogDb.close();

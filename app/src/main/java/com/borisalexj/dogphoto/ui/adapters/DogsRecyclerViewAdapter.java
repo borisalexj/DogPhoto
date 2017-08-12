@@ -1,26 +1,29 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.ui.adapters;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.io.File;
+import com.borisalexj.dogphoto.R;
+import com.borisalexj.dogphoto.models.DogModel;
+import com.borisalexj.dogphoto.ui.DetailActivity;
+import com.borisalexj.dogphoto.ui.MapsActivity;
+import com.borisalexj.dogphoto.util.Constants;
+import com.borisalexj.dogphoto.util.Utils;
+
 import java.util.ArrayList;
 
 /**
  * Created by user on 8/12/2017.
  */
 
-class DogsRecyclerViewAdapter extends RecyclerView.Adapter<DogsRecyclerViewAdapter.DogsViewHolder> {
+public class DogsRecyclerViewAdapter extends RecyclerView.Adapter<DogsRecyclerViewAdapter.DogsViewHolder> {
+    private String TAG = Constants.TAG + this.getClass().getSimpleName() + " ";
+
     ArrayList<DogModel> mDogsList;
     MapsActivity mMapsActivity;
 
@@ -38,19 +41,7 @@ class DogsRecyclerViewAdapter extends RecyclerView.Adapter<DogsRecyclerViewAdapt
 
     @Override
     public void onBindViewHolder(DogsViewHolder holder, int position) {
-        String filename = mDogsList.get(position).getPhoto();
-        if (!TextUtils.isEmpty(filename)) {
-            File imgFile = new File(filename);
-
-            if (imgFile.exists()) {
-
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-
-                holder.dogPhoto.setImageBitmap(myBitmap);
-
-            }
-        }
+        Utils.setImageViewFromFile(holder.mDogPhoto, mDogsList.get(position).getPhoto());
 
     }
 
@@ -60,18 +51,17 @@ class DogsRecyclerViewAdapter extends RecyclerView.Adapter<DogsRecyclerViewAdapt
     }
 
     public class DogsViewHolder extends RecyclerView.ViewHolder {
-        ImageView dogPhoto;
-        Button detailButton;
+        ImageView mDogPhoto;
+        Button mDetailButton;
 
         private String TAG = Constants.TAG + this.getClass().getSimpleName() + " ";
 
         public DogsViewHolder(View itemView) {
             super(itemView);
-//            Log.d(TAG, "TweetViewHolder: ");
-            dogPhoto = (ImageView) itemView.findViewById(R.id.dog_item_photo);
-            detailButton = (Button) itemView.findViewById(R.id.dog_item_details_button);
+            mDogPhoto = (ImageView) itemView.findViewById(R.id.dog_item_photo);
+            mDetailButton = (Button) itemView.findViewById(R.id.dog_item_details_button);
 
-            dogPhoto.setOnClickListener(new View.OnClickListener() {
+            mDogPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     try {
@@ -84,7 +74,7 @@ class DogsRecyclerViewAdapter extends RecyclerView.Adapter<DogsRecyclerViewAdapt
                     }
                 }
             });
-            detailButton.setOnClickListener(new View.OnClickListener() {
+            mDetailButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mMapsActivity, DetailActivity.class);

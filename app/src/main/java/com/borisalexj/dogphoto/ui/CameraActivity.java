@@ -1,17 +1,16 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.ui;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.media.MediaRecorder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -21,22 +20,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.borisalexj.dogphoto.R;
+import com.borisalexj.dogphoto.util.Constants;
+import com.borisalexj.dogphoto.util.Utils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CameraActivity extends AppCompatActivity {
+    private String TAG = Constants.TAG + this.getClass().getSimpleName();
 
-    private String TAG = Info.TAG + this.getClass().getSimpleName();
+    private SurfaceView mPreview;
+    private Camera mCamera;
+    private File mPhotoFile;
+    private SurfaceHolder mHolder;
 
-    SurfaceView preview;
-    Camera camera;
-    MediaRecorder mediaRecorder;
-
-    File photoFile;
-    File videoFile;
-    SurfaceHolder holder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
@@ -48,28 +48,26 @@ public class CameraActivity extends AppCompatActivity {
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        photoFile = new File(pictures, imageFileName + ".jpg");
-        videoFile = new File(pictures, "myvideo.3gp");
-
-        preview = (SurfaceView) findViewById(R.id.photo_preview_surface);
+        mPhotoFile = new File(pictures, imageFileName + ".jpg");
+        mPreview = (SurfaceView) findViewById(R.id.photo_preview_surface);
 
 
     }
 
     private void showCameraPreview() {
         Log.d(TAG, "showCameraPreview: ");
-        holder = preview.getHolder();
-        holder.addCallback(new SurfaceHolder.Callback() {
+        mHolder = mPreview.getHolder();
+        mHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
                 Log.d(TAG, "surfaceCreated: ");
                 try {
-                    camera.setPreviewDisplay(holder);
-                    camera.startPreview();
+                    mCamera.setPreviewDisplay(holder);
+                    mCamera.startPreview();
 
-                    ViewGroup.LayoutParams params = preview.getLayoutParams();
+                    ViewGroup.LayoutParams params = mPreview.getLayoutParams();
 
-                    Camera.Parameters parameters = camera.getParameters();
+                    Camera.Parameters parameters = mCamera.getParameters();
 //            parameters.setPreviewSize(256,256);
 //            mCamera.setParameters(parameters);
                     Camera.Size size = parameters.getPreviewSize();
@@ -107,12 +105,12 @@ public class CameraActivity extends AppCompatActivity {
                         Log.d(TAG, "resumeCamera: ");
                     }
 //
-                    preview.setLayoutParams(params);
+                    mPreview.setLayoutParams(params);
 
 //            codeImage = new Image(379, 379, "Y800");
 //                    codeImage = new Image(size.width, size.height, "Y800");
 //                    previewing = true;
-                    preview.refreshDrawableState();
+                    mPreview.refreshDrawableState();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -193,7 +191,7 @@ public class CameraActivity extends AppCompatActivity {
     }
 
 
-    private void askPermissionForCamera(){
+    private void askPermissionForCamera() {
         Log.d(TAG, "askPermissionForCamera: ");
         if (Build.VERSION.SDK_INT >= 23) {
 // Here, thisActivity is the current activity
@@ -207,7 +205,7 @@ public class CameraActivity extends AppCompatActivity {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(CameraActivity.this,
                         android.Manifest.permission.CAMERA)
                         ) {
-                    Toast.makeText(getApplicationContext(), "Accessing a camera allows us to use a camera for check-in. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Accessing a mCamera allows us to use a mCamera for check-in. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
                     // Show an expanation to the user *asynchronously* -- don't block
                     // this thread waiting for the user's response! After the user
                     // sees the explanation, try again to request the permission.
@@ -237,8 +235,8 @@ public class CameraActivity extends AppCompatActivity {
 
     private void resumeCamera() {
         Log.d(TAG, "resumeCamera: ");
-        camera = Camera.open();
-        camera.setDisplayOrientation(90);
+        mCamera = Camera.open();
+        mCamera.setDisplayOrientation(90);
     }
 
     @Override
@@ -247,7 +245,7 @@ public class CameraActivity extends AppCompatActivity {
 
         if (requestCode == Constants.Requests.REQUEST_FOR_STORAGE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Now user should be able to use camera
+                // Now user should be able to use mCamera
                 // Todo
 //                openGalleryToChoosePicture(requestCode);
             } else {
@@ -261,7 +259,7 @@ public class CameraActivity extends AppCompatActivity {
 
         if (requestCode == Constants.Requests.REQUEST_FOR_CAMERA) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Now user should be able to use camera
+                // Now user should be able to use mCamera
                 Log.d(TAG, "askPermissionForCamera: 3");
 
 //                resumeCamera();
@@ -277,28 +275,27 @@ public class CameraActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onPause() {
         Log.d(TAG, "onPause: ");
         super.onPause();
-        if (camera != null)
-            camera.release();
-        camera = null;
+        if (mCamera != null)
+            mCamera.release();
+        mCamera = null;
     }
 
     public void onClickPicture(View view) {
         Log.d(TAG, "onClickPicture: ");
-        camera.takePicture(null, null, new Camera.PictureCallback() {
+        mCamera.takePicture(null, null, new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
                 Log.d(TAG, "onPictureTaken: ");
                 try {
-                    FileOutputStream fos = new FileOutputStream(photoFile);
+                    FileOutputStream fos = new FileOutputStream(mPhotoFile);
                     fos.write(data);
                     fos.close();
                     Intent intent = new Intent(CameraActivity.this, AddDetailActivity.class);
-                    intent.putExtra("filename", Utils.transformImage(CameraActivity.this, photoFile.getCanonicalPath(), 1024, 1024));
+                    intent.putExtra("filename", Utils.transformImage(CameraActivity.this, mPhotoFile.getCanonicalPath(), 1024, 1024));
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.ui;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -7,15 +7,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -24,6 +21,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.borisalexj.dogphoto.R;
+import com.borisalexj.dogphoto.db.DogOrm;
+import com.borisalexj.dogphoto.geolocation.MyLocationListener;
+import com.borisalexj.dogphoto.models.DogModel;
+import com.borisalexj.dogphoto.util.Constants;
+import com.borisalexj.dogphoto.util.Utils;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -40,29 +43,45 @@ import com.google.maps.GeocodingApiRequest;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class AddDetailActivity extends AppCompatActivity {
-    private String TAG = Info.TAG + this.getClass().getSimpleName();
+    private String TAG = Constants.TAG + this.getClass().getSimpleName();
 
-    String filename;
-
-    EditText details_date;
-    EditText details_address;
-    EditText details_size;
-    EditText details_mast;
-    EditText details_oshiynik;
-    EditText details_name;
-    EditText details_klipsa;
-    EditText details_osoblivi_prikmety;
-    EditText primitki;
-
-    CheckBox details_oshiynik_checkBox;
-    CheckBox details_klipsa_checkBox;
+    private String filename;
+    private EditText details_date;
+    private EditText details_address;
+    private EditText details_size;
+    private EditText details_mast;
+    private EditText details_oshiynik;
+    private EditText details_name;
+    private EditText details_klipsa;
+    private EditText details_osoblivi_prikmety;
+    private EditText primitki;
+    private CheckBox details_oshiynik_checkBox;
+    private CheckBox details_klipsa_checkBox;
+    private Location mLastLocation;
     private EditText details_poroda;
+    private long mCurrentDateTime;
+    private MyLocationListener mNetLocationListener = new NetLocationListener(LocationManager.NETWORK_PROVIDER);
+    private MyLocationListener mGpsLocationListener = new GpsLocationListener(LocationManager.GPS_PROVIDER);
+    private LocationManager mGpsLocationManager = null;
+    private LocationManager mNetLocationManager = null;
+
+    private String intentActionName = TAG + "reverse_geocoding_result";
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive: inside receiver");
+            if (intent.getAction().equals(intentActionName)) {
+//                Toast.makeText(AddDetailActivity.this, String.valueOf(intent.getStringExtra("result")), Toast.LENGTH_SHORT).show();
+                details_address.setText(String.valueOf(intent.getStringExtra("result")));
+
+            }
+        }
+    };
+    private boolean mGpsGood = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,18 +132,8 @@ public class AddDetailActivity extends AppCompatActivity {
         }
         ImageView iv = (ImageView) findViewById(R.id.add_detail_image_view);
 
-        if (!TextUtils.isEmpty(filename)) {
-            File imgFile = new File(filename);
+        Utils.setImageViewFromFile(iv, filename);
 
-            if (imgFile.exists()) {
-
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-
-                iv.setImageBitmap(myBitmap);
-
-            }
-        }
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
@@ -170,7 +179,7 @@ public class AddDetailActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(intentActionName);
         intentFilter.addAction(TAG + "geocoding_result");
-        registerReceiver(broadcastReceiver, intentFilter);
+        registerReceiver(mBroadcastReceiver, intentFilter);
     }
 
     @Override
@@ -178,7 +187,7 @@ public class AddDetailActivity extends AppCompatActivity {
         super.onStop();
         deinitializeLocationServices();
         try {
-            unregisterReceiver(broadcastReceiver);
+            unregisterReceiver(mBroadcastReceiver);
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
@@ -192,30 +201,12 @@ public class AddDetailActivity extends AppCompatActivity {
 
     }
 
-    private long mCurrentDateTime;
-
     private void fillValues() {
         Calendar c = Calendar.getInstance();
         Date currentDateTime = c.getTime();
         mCurrentDateTime = currentDateTime.getTime();
-        details_date.setText(getDateTimeFromLong(mCurrentDateTime, Constants.DATE_FORMAT));
+        details_date.setText(Utils.getDateTimeFromLong(mCurrentDateTime, Constants.DATE_FORMAT));
     }
-
-
-    public static String getDateTimeFromLong(long milliSeconds, String dateFormat) {
-        // Create a DateFormatter object for displaying date in specified format.
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
-
-        // Create a calendar object that will convert the date and gpsDateTime value in milliseconds to date.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliSeconds);
-        return formatter.format(calendar.getTime());
-    }
-
-    private MyLocationListener mNetLocationListener = new NetLocationListener(LocationManager.NETWORK_PROVIDER);
-    private MyLocationListener mGpsLocationListener = new GpsLocationListener(LocationManager.GPS_PROVIDER);
-    private LocationManager mGpsLocationManager = null;
-    private LocationManager mNetLocationManager = null;
 
     public void detailsDoneClick(View view) {
         DogModel dm = new DogModel();
@@ -242,37 +233,6 @@ public class AddDetailActivity extends AppCompatActivity {
         intent.putExtra("lng", mLastLocation.getLongitude());
         startActivity(intent);
     }
-
-    private class NetLocationListener extends MyLocationListener {
-        public NetLocationListener(String provider) {
-            super(provider);
-        }
-
-        @Override
-        public void onLocationChanged(Location location) {
-            Log.i(TAG, "onLocationChanged: " + location + " gpsDateTime:" + location.getTime());
-            mLastLocation.set(location);
-            AddDetailActivity.this.mLastLocation = mLastLocation;
-//            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
-            details_address.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
-            updateLocation(mLastLocation);
-        }
-    }
-
-    Location mLastLocation;
-
-    private String intentActionName = TAG + "reverse_geocoding_result";
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "onReceive: inside receiver");
-            if (intent.getAction().equals(intentActionName)) {
-//                Toast.makeText(AddDetailActivity.this, String.valueOf(intent.getStringExtra("result")), Toast.LENGTH_SHORT).show();
-                details_address.setText(String.valueOf(intent.getStringExtra("result")));
-
-            }
-        }
-    };
 
     private void updateLocation(Location mLastLocation) {
         Log.d(TAG, "updateLocation: ");
@@ -357,37 +317,6 @@ public class AddDetailActivity extends AppCompatActivity {
         googleApiClient.disconnect();
     }
 
-    private boolean mGpsGood = false;
-
-    private class GpsLocationListener extends MyLocationListener {
-        public GpsLocationListener(String provider) {
-            super(provider);
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            super.onProviderDisabled(provider);
-            mGpsGood = false;
-            makeRequestForGps();
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            super.onProviderEnabled(provider);
-        }
-
-        @Override
-        public void onLocationChanged(Location location) {
-            Log.i(TAG, "onLocationChanged: " + location + " gpsDateTime:" + location.getTime());
-            mLastLocation.set(location);
-            AddDetailActivity.this.mLastLocation = mLastLocation;
-//            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
-            details_address.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
-            updateLocation(mLastLocation);
-        }
-    }
-
-
     private void initializeLocationManager() {
         Log.i(TAG, "initializeLocationManager");
         if (mGpsLocationManager == null) {
@@ -446,5 +375,63 @@ public class AddDetailActivity extends AppCompatActivity {
         }
     }
 
+    private class NetLocationListener extends MyLocationListener {
+        public NetLocationListener(String provider) {
+            super(provider);
+        }
 
+        @Override
+        public void onLocationChanged(Location location) {
+            Log.i(TAG, "onLocationChanged: " + location + " gpsDateTime:" + location.getTime());
+            mLastLocation.set(location);
+            AddDetailActivity.this.mLastLocation = mLastLocation;
+//            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
+            details_address.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
+            updateLocation(mLastLocation);
+        }
+    }
+
+    private class GpsLocationListener extends MyLocationListener {
+        public GpsLocationListener(String provider) {
+            super(provider);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            super.onProviderDisabled(provider);
+            mGpsGood = false;
+            makeRequestForGps();
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            super.onProviderEnabled(provider);
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+            Log.i(TAG, "onLocationChanged: " + location + " gpsDateTime:" + location.getTime());
+            mLastLocation.set(location);
+            AddDetailActivity.this.mLastLocation = mLastLocation;
+//            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
+            details_address.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
+            updateLocation(mLastLocation);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: ");
+        switch (requestCode) {
+            case Constants.Requests.REQUEST_CODE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "onRequestPermissionsResult: granted");
+                    initializeLocationServices();
+                } else {
+                    Log.d(TAG, "onRequestPermissionsResult: NOT granted");
+                    Toast.makeText(AddDetailActivity.this, "Permission Denied, You cannot access location data.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
 }

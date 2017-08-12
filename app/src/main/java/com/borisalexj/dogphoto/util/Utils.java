@@ -1,4 +1,4 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,7 +7,9 @@ import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -16,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -23,7 +26,7 @@ import java.util.Date;
  */
 
 public class Utils {
-    static String TAG = Info.TAG + "Helpers";
+    static String TAG = Constants.TAG + "Helpers";
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
@@ -102,5 +105,28 @@ public class Utils {
         }
 
         return outFile.getAbsolutePath();
+    }
+
+    public static void setImageViewFromFile(ImageView iv, String filename) {
+        if (!TextUtils.isEmpty(filename)) {
+            File imgFile = new File(filename);
+
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                iv.setImageBitmap(myBitmap);
+
+            }
+        }
+
+    }
+
+    public static String getDateTimeFromLong(long milliSeconds, String dateFormat) {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and gpsDateTime value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
     }
 }

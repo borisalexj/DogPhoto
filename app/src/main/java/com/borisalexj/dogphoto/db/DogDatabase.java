@@ -1,17 +1,18 @@
-package com.borisalexj.dogphoto;
+package com.borisalexj.dogphoto.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
-import android.widget.EditText;
+
+import com.borisalexj.dogphoto.util.Constants;
 
 /**
  * Created by user on 8/12/2017.
  */
 
-public class DogDatabase  extends SQLiteOpenHelper {
+public class DogDatabase extends SQLiteOpenHelper {
     String TAG = Constants.TAG + this.getClass().getSimpleName();
 
     public DogDatabase(Context context) {
