@@ -12,6 +12,7 @@ public class DogModel {
     private String photo;
     private String date;
     private String address;
+    private String poroda;
     private String lat;
     private String lng;
     private String size;
@@ -24,6 +25,47 @@ public class DogModel {
 
     public int get_id() {
         return _id;
+    }
+
+    public String getPoroda() {
+        return poroda;
+    }
+
+    public void setPoroda(String poroda) {
+        this.poroda = poroda;
+    }
+
+    public DogModel(String photo, String date, String address, String poroda, String lat, String lng, String size, String mast, String oshiynik, String name, String klipsa, String prikmety, String primitki) {
+        this.photo = photo;
+        this.date = date;
+        this.address = address;
+        this.poroda = poroda;
+        this.lat = lat;
+        this.lng = lng;
+        this.size = size;
+        this.mast = mast;
+        this.oshiynik = oshiynik;
+        this.name = name;
+        this.klipsa = klipsa;
+        this.prikmety = prikmety;
+        this.primitki = primitki;
+    }
+
+    public DogModel(int _id, String photo, String date, String address, String poroda, String lat, String lng, String size, String mast, String oshiynik, String name, String klipsa, String prikmety, String primitki) {
+        this._id = _id;
+        this.photo = photo;
+        this.date = date;
+        this.address = address;
+        this.poroda = poroda;
+        this.lat = lat;
+        this.lng = lng;
+        this.size = size;
+        this.mast = mast;
+        this.oshiynik = oshiynik;
+        this.name = name;
+        this.klipsa = klipsa;
+        this.prikmety = prikmety;
+        this.primitki = primitki;
     }
 
     public DogModel(int _id, String photo, String date, String address, String lat, String lng, String size, String mast, String oshiynik, String name, String klipsa, String prikmety, String primitki) {
@@ -151,6 +193,7 @@ public class DogModel {
         contentValues.put(DogDatabase.DatabaseContract.DataColumns.PHOTO, photo);
         contentValues.put(DogDatabase.DatabaseContract.DataColumns.DATE, date);
         contentValues.put(DogDatabase.DatabaseContract.DataColumns.ADRRESS, address);
+        contentValues.put(DogDatabase.DatabaseContract.DataColumns.PORODA, poroda);
         contentValues.put(DogDatabase.DatabaseContract.DataColumns.LAT, lat);
         contentValues.put(DogDatabase.DatabaseContract.DataColumns.LNG, lng);
         contentValues.put(DogDatabase.DatabaseContract.DataColumns.SIZE, size);

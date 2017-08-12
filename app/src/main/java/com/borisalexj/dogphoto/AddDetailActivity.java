@@ -62,44 +62,46 @@ public class AddDetailActivity extends AppCompatActivity {
 
     CheckBox details_oshiynik_checkBox;
     CheckBox details_klipsa_checkBox;
+    private EditText details_poroda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_detail);
 
-        details_date = (EditText) findViewById(R.id.details_date);
-        details_address = (EditText) findViewById(R.id.details_geo);
-        details_size = (EditText) findViewById(R.id.details_size);
-        details_mast = (EditText) findViewById(R.id.details_mast);
-        details_oshiynik = (EditText) findViewById(R.id.details_oshiynik_edittext);
-        details_name = (EditText) findViewById(R.id.details_name);
-        details_klipsa = (EditText) findViewById(R.id.details_klipsa_editext);
-        details_osoblivi_prikmety = (EditText) findViewById(R.id.details_osoblivi_prikmety);
-        primitki = (EditText) findViewById(R.id.primitki);
+        details_date = (EditText) findViewById(R.id.add_details_date);
+        details_address = (EditText) findViewById(R.id.add_details_geo);
+        details_poroda = (EditText) findViewById(R.id.add_details_poroda);
+        details_size = (EditText) findViewById(R.id.add_details_size);
+        details_mast = (EditText) findViewById(R.id.add_details_mast);
+        details_oshiynik = (EditText) findViewById(R.id.add_details_oshiynik_edittext);
+        details_name = (EditText) findViewById(R.id.add_details_name);
+        details_klipsa = (EditText) findViewById(R.id.add_details_klipsa_editext);
+        details_osoblivi_prikmety = (EditText) findViewById(R.id.add_details_osoblivi_prikmety);
+        primitki = (EditText) findViewById(R.id.add_details_primitki);
 
-        details_oshiynik_checkBox = (CheckBox) findViewById(R.id.details_oshiynik_checkBox);
+        details_oshiynik_checkBox = (CheckBox) findViewById(R.id.add_details_oshiynik_checkBox);
 
         details_oshiynik_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    (findViewById(R.id.details_oshiynk_layout)).setVisibility(View.VISIBLE);
+                    (findViewById(R.id.add_details_oshiynk_layout)).setVisibility(View.VISIBLE);
                 } else {
-                    (findViewById(R.id.details_oshiynk_layout)).setVisibility(View.GONE);
+                    (findViewById(R.id.add_details_oshiynk_layout)).setVisibility(View.GONE);
 
                 }
             }
         });
 
-        details_klipsa_checkBox = (CheckBox) findViewById(R.id.details_klipsa_checkBox);
+        details_klipsa_checkBox = (CheckBox) findViewById(R.id.add_details_klipsa_checkBox);
         details_klipsa_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    (findViewById(R.id.details_klipsa_layout)).setVisibility(View.VISIBLE);
+                    (findViewById(R.id.add_details_klipsa_layout)).setVisibility(View.VISIBLE);
                 } else {
-                    (findViewById(R.id.details_klipsa_layout)).setVisibility(View.GONE);
+                    (findViewById(R.id.add_details_klipsa_layout)).setVisibility(View.GONE);
 
                 }
             }
@@ -109,7 +111,7 @@ public class AddDetailActivity extends AppCompatActivity {
         if (incomingIntent != null) {
             filename = incomingIntent.getStringExtra("filename");
         }
-        ImageView iv = (ImageView) findViewById(R.id.detail_image_view);
+        ImageView iv = (ImageView) findViewById(R.id.add_detail_image_view);
 
         if (!TextUtils.isEmpty(filename)) {
             File imgFile = new File(filename);
@@ -221,11 +223,11 @@ public class AddDetailActivity extends AppCompatActivity {
         dm.setPhoto(String.valueOf(filename));
         dm.setDate(String.valueOf(details_date.getText()));
         dm.setAddress(String.valueOf(details_address.getText()));
+        dm.setPoroda(String.valueOf(details_poroda.getText()));
         if (mLastLocation != null) {
             dm.setLat(String.valueOf(mLastLocation.getLatitude()));
             dm.setLng(String.valueOf(mLastLocation.getLongitude()));
         }
-        dm.setLng(String.valueOf(details_address.getText()));
         dm.setSize(String.valueOf(details_size.getText()));
         dm.setMast(String.valueOf(details_mast.getText()));
         dm.setOshiynik(String.valueOf(details_oshiynik.getText()));
@@ -235,7 +237,10 @@ public class AddDetailActivity extends AppCompatActivity {
         dm.setPrimitki(String.valueOf(primitki.getText()));
 
         (new DogOrm(this, TAG)).storeDog(dm);
-        startActivity(new Intent(this, MapsActivity.class));
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("lat", mLastLocation.getLatitude());
+        intent.putExtra("lng", mLastLocation.getLongitude());
+        startActivity(intent);
     }
 
     private class NetLocationListener extends MyLocationListener {
@@ -271,6 +276,7 @@ public class AddDetailActivity extends AppCompatActivity {
 
     private void updateLocation(Location mLastLocation) {
         Log.d(TAG, "updateLocation: ");
+        (findViewById(R.id.add_detail_done_button)).setEnabled(true);
 
         GeoApiContext context;
         context = new GeoApiContext().setApiKey(this.getResources().getString(R.string.google_geocoding_key));

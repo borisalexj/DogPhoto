@@ -4,7 +4,9 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="row_height">48dp</dimen>
     <dimen name="business_logo_size">100dp</dimen>
+    <dimen name="business_logo_size_8">112dp</dimen>
     <dimen name="edit_textSize">16dp</dimen>
     <dimen name="business_small_image_size">50dp</dimen>
+    <dimen name="business_small_image_with">75dp</dimen>
     <dimen name="business_rounded_image_stroke">2dp</dimen>
 </resources>

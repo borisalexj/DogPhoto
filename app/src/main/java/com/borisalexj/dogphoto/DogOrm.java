@@ -36,13 +36,49 @@ public class DogOrm {
         }
     }
 
+    public DogModel getDog(int _id) {
+        Log.d(TAG, "getUnsentPoints: ");
+        DogDatabase dogDb = new DogDatabase(mContext);
+        SQLiteDatabase sqLiteDogDb = dogDb.getReadableDatabase();
+
+        String selection = DogDatabase.DatabaseContract.DataColumns._ID + " = ?";
+        String[] selectionArgs = new String[]{String.valueOf(_id)};
+        Cursor cursor = sqLiteDogDb.query(DogDatabase.DatabaseContract.DATA_TABLE_NAME,
+                null, selection, selectionArgs, null, null, null);
+        Log.d(TAG, "getUnsentPoints: cursor_size - " + String.valueOf(cursor.getCount()));
+        cursor.moveToFirst();
+        DogModel dm = new DogModel();
+        if (cursor.getCount() != 0) {
+            dm = new DogModel(
+                    cursor.getInt(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns._ID)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.PHOTO)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.DATE)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.ADRRESS)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.PORODA)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.LAT)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.LNG)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.SIZE)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.MAST)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.OSHIYNIK)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.NAME)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.KLIPSA)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.PRIKMETY)),
+                    cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.PRIMITKI))
+            );
+        }
+        dogDb.close();
+
+        return dm;
+
+    }
+
     public ArrayList<DogModel> getPointsFromDb() {
         ArrayList<DogModel> dogsArray = new ArrayList<>();
         Log.d(TAG, "getPointsFromDb: ");
-        DogDatabase pppDb = new DogDatabase(mContext);
-        SQLiteDatabase sqLitePppDb = pppDb.getReadableDatabase();
+        DogDatabase dogDb = new DogDatabase(mContext);
+        SQLiteDatabase sqLiteDogDb = dogDb.getReadableDatabase();
 
-        Cursor cursor = sqLitePppDb.query(DogDatabase.DatabaseContract.DATA_TABLE_NAME,
+        Cursor cursor = sqLiteDogDb.query(DogDatabase.DatabaseContract.DATA_TABLE_NAME,
                 null, null, null, null, null, DogDatabase.DatabaseContract.DataColumns._ID + " DESC");
         Log.d(TAG, "getPointsFromDb: cursor_size - " + String.valueOf(cursor.getCount()));
         cursor.moveToFirst();
@@ -54,6 +90,7 @@ public class DogOrm {
                         cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.PHOTO)),
                         cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.DATE)),
                         cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.ADRRESS)),
+                        cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.PORODA)),
                         cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.LAT)),
                         cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.LNG)),
                         cursor.getString(cursor.getColumnIndex(DogDatabase.DatabaseContract.DataColumns.SIZE)),
@@ -67,8 +104,8 @@ public class DogOrm {
             } while (cursor.moveToNext());
             Log.d(TAG, "getPointsFromDb: array_size - " + String.valueOf(dogsArray.size()));
         }
-        sqLitePppDb.close();
-        pppDb.close();
+        sqLiteDogDb.close();
+        dogDb.close();
         return dogsArray;
     }
 

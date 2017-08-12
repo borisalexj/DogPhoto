@@ -1,5 +1,6 @@
 package com.borisalexj.dogphoto;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,9 +22,11 @@ import java.util.ArrayList;
 
 class DogsRecyclerViewAdapter extends RecyclerView.Adapter<DogsRecyclerViewAdapter.DogsViewHolder> {
     ArrayList<DogModel> mDogsList;
+    MapsActivity mMapsActivity;
 
     public DogsRecyclerViewAdapter(MapsActivity mapsActivity, ArrayList<DogModel> dogsList) {
         mDogsList = dogsList;
+        mMapsActivity = mapsActivity;
     }
 
     @Override
@@ -57,15 +61,37 @@ class DogsRecyclerViewAdapter extends RecyclerView.Adapter<DogsRecyclerViewAdapt
 
     public class DogsViewHolder extends RecyclerView.ViewHolder {
         ImageView dogPhoto;
-        TextView tweetAuthor;
-        TextView tweetDateTime;
-        TextView tweetText;
+        Button detailButton;
+
         private String TAG = Constants.TAG + this.getClass().getSimpleName() + " ";
 
         public DogsViewHolder(View itemView) {
             super(itemView);
 //            Log.d(TAG, "TweetViewHolder: ");
             dogPhoto = (ImageView) itemView.findViewById(R.id.dog_item_photo);
+            detailButton = (Button) itemView.findViewById(R.id.dog_item_details_button);
+
+            dogPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        mMapsActivity.addMarkerToMap(
+                                Double.parseDouble(mDogsList.get(getAdapterPosition()).getLat()),
+                                Double.parseDouble(mDogsList.get(getAdapterPosition()).getLng())
+                        );
+                    } catch (Exception e) {
+
+                    }
+                }
+            });
+            detailButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mMapsActivity, DetailActivity.class);
+                    intent.putExtra("dog_id", mDogsList.get(getAdapterPosition()).get_id());
+                    mMapsActivity.startActivity(intent);
+                }
+            });
         }
     }
 }

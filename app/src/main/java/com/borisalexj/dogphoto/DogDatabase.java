@@ -31,7 +31,7 @@ public class DogDatabase  extends SQLiteOpenHelper {
     }
 
     public static final class DatabaseContract {
-        public static final int DB_VERSION = 2;
+        public static final int DB_VERSION = 4;
         public static final String DB_NAME = "dog_db";
 
         public static final String DATA_TABLE_NAME = "dogs";
@@ -41,6 +41,7 @@ public class DogDatabase  extends SQLiteOpenHelper {
                 DataColumns.PHOTO + " text," +
                 DataColumns.DATE + " text," +
                 DataColumns.ADRRESS + " text," +
+                DataColumns.PORODA + " text," +
                 DataColumns.LAT + " text," +
                 DataColumns.LNG + " text," +
                 DataColumns.SIZE + " text," +
@@ -55,6 +56,7 @@ public class DogDatabase  extends SQLiteOpenHelper {
             String PHOTO = "photo";
             String DATE = "date";
             String ADRRESS = "address";
+            String PORODA = "poroda";
             String LAT = "lat";
             String LNG = "lng";
             String SIZE = "size";

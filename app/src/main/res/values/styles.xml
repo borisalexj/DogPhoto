@@ -52,7 +52,7 @@
     </style>
 
     <style name="BusinessSmallRounds">
-        <item name="android:layout_width">@dimen/business_small_image_size</item>
+        <item name="android:layout_width">@dimen/business_small_image_with</item>
         <item name="android:layout_height">@dimen/business_small_image_size</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:background">@drawable/business_small_image_shape</item>

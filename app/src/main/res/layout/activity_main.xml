@@ -58,12 +58,15 @@
                 <TextView
                     android:id="@+id/business_users_count_TextView"
                     style="@style/BusinessSmallRounds"
+
                     android:layout_gravity="center|center_vertical|center_horizontal"
                     android:gravity="center"
-                    android:text="Готово"
+                    android:text="Р-Р-Р"
                     android:textAlignment="center"
+                    android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
@@ -74,32 +77,33 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/business_logo_ImageView"
+                <TextView
+                    android:layout_width="@dimen/business_logo_size_8"
+                    android:layout_height="@dimen/business_logo_size_8"
+                    android:layout_gravity="center"
+                    android:background="@drawable/business_big_image_shape_border"
+                    android:gravity="center"
+                    android:onClick="onClickPicture"
+                    android:text="Клац"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+
+                <TextView
                     android:layout_width="@dimen/business_logo_size"
                     android:layout_height="@dimen/business_logo_size"
                     android:layout_gravity="center"
                     android:background="@drawable/business_big_image_shape"
-                    android:onClick="onClickPicture"
-                    android:scaleType="fitXY"
-                    app:riv_border_color="@android:color/white"
-                    app:riv_border_width="@dimen/business_rounded_image_stroke"
-                    app:riv_mutate_background="true"
-                    app:riv_oval="true"
-                    app:riv_tile_mode="repeat"
-                    app:riv_tile_mode_x="clamp"
-                    app:riv_tile_mode_y="clamp" />
-
-                <TextView
-                    android:onClick="onClickPicture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
                     android:gravity="center"
+                    android:onClick="onClickPicture"
                     android:text="Клац"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="24sp" />
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
 
 
             </FrameLayout>
@@ -114,15 +118,16 @@
                 android:orientation="vertical">
 
                 <TextView
-
                     android:id="@+id/business_sprouts_count_TextView"
                     style="@style/BusinessSmallRounds"
                     android:gravity="center"
                     android:onClick="goToListClick"
-                    android:text="Список"
+                    android:text="Песики"
                     android:textAlignment="center"
+                    android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
 
 
             </LinearLayout>
