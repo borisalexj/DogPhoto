@@ -273,4 +273,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void goToListClick(View view) {
+        startActivity(new Intent(this, MapsActivity.class));
+    }
 }

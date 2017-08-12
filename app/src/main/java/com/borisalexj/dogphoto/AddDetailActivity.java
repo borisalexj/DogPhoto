@@ -13,11 +13,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -53,8 +50,8 @@ public class AddDetailActivity extends AppCompatActivity {
 
     String filename;
 
-    EditText details_data;
-    EditText details_geo;
+    EditText details_date;
+    EditText details_address;
     EditText details_size;
     EditText details_mast;
     EditText details_oshiynik;
@@ -71,8 +68,8 @@ public class AddDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_detail);
 
-        details_data = (EditText) findViewById(R.id.details_data);
-        details_geo = (EditText) findViewById(R.id.details_geo);
+        details_date = (EditText) findViewById(R.id.details_date);
+        details_address = (EditText) findViewById(R.id.details_geo);
         details_size = (EditText) findViewById(R.id.details_size);
         details_mast = (EditText) findViewById(R.id.details_mast);
         details_oshiynik = (EditText) findViewById(R.id.details_oshiynik_edittext);
@@ -199,7 +196,7 @@ public class AddDetailActivity extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         Date currentDateTime = c.getTime();
         mCurrentDateTime = currentDateTime.getTime();
-        details_data.setText(getDateTimeFromLong(mCurrentDateTime, Constants.DATE_FORMAT));
+        details_date.setText(getDateTimeFromLong(mCurrentDateTime, Constants.DATE_FORMAT));
     }
 
 
@@ -218,6 +215,29 @@ public class AddDetailActivity extends AppCompatActivity {
     private LocationManager mGpsLocationManager = null;
     private LocationManager mNetLocationManager = null;
 
+    public void detailsDoneClick(View view) {
+        DogModel dm = new DogModel();
+
+        dm.setPhoto(String.valueOf(filename));
+        dm.setDate(String.valueOf(details_date.getText()));
+        dm.setAddress(String.valueOf(details_address.getText()));
+        if (mLastLocation != null) {
+            dm.setLat(String.valueOf(mLastLocation.getLatitude()));
+            dm.setLng(String.valueOf(mLastLocation.getLongitude()));
+        }
+        dm.setLng(String.valueOf(details_address.getText()));
+        dm.setSize(String.valueOf(details_size.getText()));
+        dm.setMast(String.valueOf(details_mast.getText()));
+        dm.setOshiynik(String.valueOf(details_oshiynik.getText()));
+        dm.setName(String.valueOf(details_name.getText()));
+        dm.setKlipsa(String.valueOf(details_klipsa.getText()));
+        dm.setPrikmety(String.valueOf(details_osoblivi_prikmety.getText()));
+        dm.setPrimitki(String.valueOf(primitki.getText()));
+
+        (new DogOrm(this, TAG)).storeDog(dm);
+        startActivity(new Intent(this, MapsActivity.class));
+    }
+
     private class NetLocationListener extends MyLocationListener {
         public NetLocationListener(String provider) {
             super(provider);
@@ -227,11 +247,14 @@ public class AddDetailActivity extends AppCompatActivity {
         public void onLocationChanged(Location location) {
             Log.i(TAG, "onLocationChanged: " + location + " gpsDateTime:" + location.getTime());
             mLastLocation.set(location);
+            AddDetailActivity.this.mLastLocation = mLastLocation;
 //            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
-            details_geo.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
+            details_address.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
             updateLocation(mLastLocation);
         }
     }
+
+    Location mLastLocation;
 
     private String intentActionName = TAG + "reverse_geocoding_result";
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -240,7 +263,7 @@ public class AddDetailActivity extends AppCompatActivity {
             Log.d(TAG, "onReceive: inside receiver");
             if (intent.getAction().equals(intentActionName)) {
 //                Toast.makeText(AddDetailActivity.this, String.valueOf(intent.getStringExtra("result")), Toast.LENGTH_SHORT).show();
-                details_geo.setText(String.valueOf(intent.getStringExtra("result")));
+                details_address.setText(String.valueOf(intent.getStringExtra("result")));
 
             }
         }
@@ -351,8 +374,9 @@ public class AddDetailActivity extends AppCompatActivity {
         public void onLocationChanged(Location location) {
             Log.i(TAG, "onLocationChanged: " + location + " gpsDateTime:" + location.getTime());
             mLastLocation.set(location);
+            AddDetailActivity.this.mLastLocation = mLastLocation;
 //            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
-            details_geo.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
+            details_address.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
             updateLocation(mLastLocation);
         }
     }

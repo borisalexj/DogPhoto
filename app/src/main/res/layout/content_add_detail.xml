@@ -32,7 +32,7 @@
                 android:text="Дата" />
 
             <EditText
-                android:id="@+id/details_data"
+                android:id="@+id/details_date"
                 style="@style/CustomEditText"
                 android:editable="false" />
         </LinearLayout>
@@ -51,7 +51,7 @@
 
             <TextView
                 style="@style/CustomTextView"
-                android:text="GEO" />
+                android:text="Адреса" />
 
             <EditText
                 android:editable="false"
@@ -126,6 +126,7 @@
             android:layout_height="1dp"
             android:background="@color/divider"/>
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
             android:orientation="horizontal"
@@ -139,6 +140,8 @@
                 android:text="Ошийник" />
 
             <CheckBox
+                android:paddingRight="16dp"
+                android:background="@color/white"
                 android:id="@+id/details_oshiynik_checkBox"
                 android:layout_weight="0"
                 android:layout_width="wrap_content"
@@ -185,6 +188,7 @@
             android:layout_height="1dp"
             android:background="@color/divider"/>
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
             android:orientation="horizontal"
@@ -197,6 +201,7 @@
                 android:text="Кліпса" />
 
             <CheckBox
+                android:paddingRight="16dp"
                 android:id="@+id/details_klipsa_checkBox"
                 android:layout_weight="0"
                 android:layout_width="wrap_content"
@@ -260,6 +265,8 @@
             android:layout_height="1dp"
             android:background="@color/divider"/>
         <LinearLayout
+            android:background="@color/white"
+            android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
             android:orientation="horizontal"
@@ -267,11 +274,13 @@
             >
 
             <Button
+                android:onClick="detailsDoneClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_span="2"
                 android:layout_weight="1"
-                android:text="Done" />
+                android:background="#F4ECE4"
+                android:text="Фініш" />
 
         </LinearLayout>
 
