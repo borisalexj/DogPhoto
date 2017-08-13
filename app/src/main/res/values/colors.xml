@@ -7,4 +7,6 @@
     <color name="divider">#555</color>
     <color name="white">#FFF</color>
     <color name="lite_gray">#EEE</color>
+    <color name="green">#54d483</color>
+    <color name="blue">#5db3f5</color>
 </resources>

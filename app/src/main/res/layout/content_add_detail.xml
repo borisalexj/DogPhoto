@@ -5,6 +5,7 @@
                                             xmlns:tools="http://schemas.android.com/tools"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
+                                            android:background="@color/white"
                                             app:layout_behavior="@string/appbar_scrolling_view_behavior"
                                             tools:context="com.borisalexj.dogphoto.ui.AddDetailActivity"
                                             tools:showIn="@layout/activity_add_detail">
@@ -21,264 +22,223 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
+            style="@style/CustomAddDetailLayout"
 
             >
 
             <TextView
-                style="@style/CustomTextView"
+                android:id="@+id/add_details_date_label"
+                style="@style/AddCustomTextView"
+                android:onClick="add_details_date_label"
                 android:text="Дата"/>
 
             <EditText
                 android:id="@+id/add_details_date"
-                style="@style/CustomEditText"
-                android:editable="false"/>
+                style="@style/AddCustomEditText"
+                android:editable="false"
+                tools:text="stub"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
-
-            >
+            style="@style/CustomAddDetailLayout">
 
             <TextView
-                style="@style/CustomTextView"
+                android:id="@+id/add_details_geo_label"
+                style="@style/AddCustomTextView"
+                android:onClick="add_details_geo_label"
                 android:text="Адреса"/>
 
             <EditText
                 android:id="@+id/add_details_geo"
-                style="@style/CustomEditText"
+                style="@style/AddCustomEditText"
                 android:editable="false"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
+            style="@style/CustomAddDetailLayout"
 
             >
 
             <TextView
-                style="@style/CustomTextView"
+                android:id="@+id/add_details_poroda_label"
+                style="@style/AddCustomTextView"
+
+                android:onClick="add_details_poroda_label"
                 android:text="Порода"/>
 
             <EditText
                 android:id="@+id/add_details_poroda"
-                style="@style/CustomEditText"/>
+                style="@style/AddCustomEditText"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
+            style="@style/CustomAddDetailLayout"
 
             >
 
             <TextView
-                style="@style/CustomTextView"
+                android:id="@+id/add_details_size_label"
+                style="@style/AddCustomTextView"
+                android:onClick="add_details_size_label"
                 android:text="Розмір"/>
 
             <EditText
                 android:id="@+id/add_details_size"
-                style="@style/CustomEditText"/>
+                style="@style/AddCustomEditText"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
+            style="@style/CustomAddDetailLayout"
 
             >
 
             <TextView
-
-                style="@style/CustomTextView"
+                android:id="@+id/add_details_mast_label"
+                style="@style/AddCustomTextView"
+                android:onClick="add_details_mast_label"
                 android:text="Масть"/>
 
             <EditText
                 android:id="@+id/add_details_mast"
-                style="@style/CustomEditText"
+                style="@style/AddCustomEditText"
                 android:layout_weight="0"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:background="@color/white"
-            android:orientation="horizontal"
+            style="@style/CustomAddDetailLayout"
 
             >
 
             <TextView
-                style="@style/CustomTextView"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
+                android:id="@+id/add_details_oshiynik_label"
+                style="@style/AddCustomTextView"
+                android:onClick="add_details_oshiynik_label"
                 android:text="Ошийник"/>
 
-            <CheckBox
-                android:id="@+id/add_details_oshiynik_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:background="@color/white"
-                android:paddingRight="16dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/add_details_oshiynk_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            >
-
-
             <EditText
-                android:id="@+id/add_details_oshiynik_edittext"
-                style="@style/CustomEditText"/>
+                android:id="@+id/add_details_oshiynik"
+                style="@style/AddCustomEditText"
+                android:layout_weight="0"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
+            style="@style/CustomAddDetailLayout"
 
             >
 
             <TextView
-                style="@style/CustomTextView"
+                android:id="@+id/add_details_name_label"
+                style="@style/AddCustomTextView"
+
+                android:onClick="add_details_name_label"
                 android:text="Кличка"/>
 
 
             <EditText
                 android:id="@+id/add_details_name"
-                style="@style/CustomEditText"/>
+                style="@style/AddCustomEditText"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:background="@color/white"
-            android:orientation="horizontal"
+            style="@style/CustomAddDetailLayout"
 
             >
 
             <TextView
-                style="@style/CustomTextView"
-                android:layout_weight="1"
+                android:id="@+id/add_details_klipsa_label"
+                style="@style/AddCustomTextView"
+
+                android:onClick="add_details_klipsa_label"
                 android:text="Кліпса"/>
 
-            <CheckBox
-                android:id="@+id/add_details_klipsa_checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:paddingRight="16dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/add_details_klipsa_layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
-            android:visibility="gone"
-
-            >
-
             <EditText
-                android:id="@+id/add_details_klipsa_editext"
-                style="@style/CustomEditText"/>
+                android:id="@+id/add_details_klipsa"
+                style="@style/AddCustomEditText"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
-
+            style="@style/CustomAddDetailLayout"
             >
 
             <TextView
-                style="@style/CustomTextView"
+                android:id="@+id/add_details_prikmety_label"
+                style="@style/AddCustomTextView"
+
+                android:onClick="add_details_prikmety_label"
                 android:text="Особливі прикмети"/>
 
             <EditText
-                android:id="@+id/add_details_osoblivi_prikmety"
-                style="@style/CustomEditText"/>
+                android:id="@+id/add_details_prikmety"
+                style="@style/AddCustomEditText"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
-
-            >
+            style="@style/CustomAddDetailLayout">
 
             <TextView
-                style="@style/CustomTextView"
+                android:id="@+id/add_details_primitky_label"
+                style="@style/AddCustomTextView"
+                android:onClick="add_details_primitky_label"
                 android:text="Примітки"/>
 
             <EditText
                 android:id="@+id/add_details_primitki"
-                style="@style/CustomEditText"/>
+                style="@style/AddCustomEditText"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0dp"
             android:background="@color/divider"/>
 
         <LinearLayout
@@ -287,6 +247,7 @@
             android:background="@color/white"
             android:orientation="horizontal"
             android:padding="8dp"
+            android:visibility="gone"
 
             >
 

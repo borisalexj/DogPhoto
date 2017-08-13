@@ -3,7 +3,7 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/lite_gray"
+            android:background="@color/white"
             android:fitsSystemWindows="true"
             tools:context="com.borisalexj.dogphoto.ui.AddDetailActivity">
 
@@ -16,7 +16,8 @@
             android:id="@+id/detail_image_view"
             android:layout_width="match_parent"
             android:layout_height="390dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/ic_launcher"/>
 
         <!--<android.support.v7.widget.Toolbar-->
         <!--android:id="@+id/toolbar"-->
@@ -33,68 +34,58 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:orientation="horizontal"
-
-                >
+                style="@style/CustomAddDetailLayout">
 
                 <TextView
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:text="Дата"/>
 
                 <TextView
                     android:id="@+id/details_date"
-                    style="@style/CustomEditText"
+                    style="@style/ShowInfoCustomTextView"
                     android:editable="false"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:orientation="horizontal"
-
+                style="@style/CustomAddDetailLayout"
                 >
 
                 <TextView
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:text="Адреса"/>
 
                 <TextView
                     android:id="@+id/details_geo"
-                    style="@style/CustomEditText"
+                    style="@style/ShowInfoCustomTextView"
                     android:editable="false"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:orientation="horizontal"
-
+                style="@style/CustomAddDetailLayout"
                 >
 
                 <TextView
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:text="Порода"/>
 
                 <TextView
                     android:id="@+id/details_poroda"
-                    style="@style/CustomEditText"/>
+                    style="@style/ShowInfoCustomTextView"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
             <LinearLayout
@@ -105,149 +96,129 @@
                 >
 
                 <TextView
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:text="Розмір"/>
 
                 <TextView
                     android:id="@+id/details_size"
-                    style="@style/CustomEditText"/>
+                    style="@style/ShowInfoCustomTextView"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:orientation="horizontal"
-
+                style="@style/CustomAddDetailLayout"
                 >
 
                 <TextView
 
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:text="Масть"/>
 
                 <TextView
                     android:id="@+id/details_mast"
-                    style="@style/CustomEditText"
+                    style="@style/ShowInfoCustomTextView"
                     android:layout_weight="0"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:background="@color/white"
-                android:orientation="horizontal"
-
+                style="@style/CustomAddDetailLayout"
                 >
 
                 <TextView
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:text="Ошийник"/>
 
 
                 <TextView
                     android:id="@+id/details_oshiynik"
-                    style="@style/CustomEditText"/>
+                    style="@style/ShowInfoCustomTextView"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:orientation="horizontal">
-
+                style="@style/CustomAddDetailLayout">
                 <TextView
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:text="Кличка"/>
 
 
                 <TextView
                     android:id="@+id/details_name"
-                    style="@style/CustomEditText"/>
+                    style="@style/ShowInfoCustomTextView"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:background="@color/white"
-                android:orientation="horizontal"
-
+                style="@style/CustomAddDetailLayout"
                 >
 
                 <TextView
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:layout_weight="0"
                     android:text="Кліпса"/>
 
                 <TextView
                     android:id="@+id/details_klipsa"
-                    style="@style/CustomEditText"/>
+                    style="@style/ShowInfoCustomTextView"/>
 
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:orientation="horizontal"
-
+                style="@style/CustomAddDetailLayout"
                 >
 
                 <TextView
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:text="Особливі прикмети"/>
 
                 <TextView
                     android:id="@+id/details_osoblivi_prikmety"
-                    style="@style/CustomEditText"/>
+                    style="@style/ShowInfoCustomTextView"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:orientation="horizontal"
-
+                style="@style/CustomAddDetailLayout"
                 >
 
                 <TextView
-                    style="@style/CustomTextView"
+                    style="@style/ShowLabelCustomTextView"
                     android:text="Примітки"/>
 
                 <TextView
                     android:id="@+id/details_primitki"
-                    style="@style/CustomEditText"/>
+                    style="@style/ShowInfoCustomTextView"/>
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0dp"
                 android:background="@color/divider"/>
 
         </LinearLayout>

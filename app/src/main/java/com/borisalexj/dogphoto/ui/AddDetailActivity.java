@@ -13,10 +13,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -46,6 +49,8 @@ import com.google.maps.model.LatLng;
 import java.util.Calendar;
 import java.util.Date;
 
+import static android.R.attr.id;
+
 public class AddDetailActivity extends AppCompatActivity {
     private String TAG = Constants.TAG + this.getClass().getSimpleName();
 
@@ -59,8 +64,6 @@ public class AddDetailActivity extends AppCompatActivity {
     private EditText details_klipsa;
     private EditText details_osoblivi_prikmety;
     private EditText primitki;
-    private CheckBox details_oshiynik_checkBox;
-    private CheckBox details_klipsa_checkBox;
     private Location mLastLocation;
     private EditText details_poroda;
     private long mCurrentDateTime;
@@ -93,38 +96,12 @@ public class AddDetailActivity extends AppCompatActivity {
         details_poroda = (EditText) findViewById(R.id.add_details_poroda);
         details_size = (EditText) findViewById(R.id.add_details_size);
         details_mast = (EditText) findViewById(R.id.add_details_mast);
-        details_oshiynik = (EditText) findViewById(R.id.add_details_oshiynik_edittext);
+        details_oshiynik = (EditText) findViewById(R.id.add_details_oshiynik);
         details_name = (EditText) findViewById(R.id.add_details_name);
-        details_klipsa = (EditText) findViewById(R.id.add_details_klipsa_editext);
-        details_osoblivi_prikmety = (EditText) findViewById(R.id.add_details_osoblivi_prikmety);
+        details_klipsa = (EditText) findViewById(R.id.add_details_klipsa);
+        details_osoblivi_prikmety = (EditText) findViewById(R.id.add_details_prikmety);
         primitki = (EditText) findViewById(R.id.add_details_primitki);
 
-        details_oshiynik_checkBox = (CheckBox) findViewById(R.id.add_details_oshiynik_checkBox);
-
-        details_oshiynik_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    (findViewById(R.id.add_details_oshiynk_layout)).setVisibility(View.VISIBLE);
-                } else {
-                    (findViewById(R.id.add_details_oshiynk_layout)).setVisibility(View.GONE);
-
-                }
-            }
-        });
-
-        details_klipsa_checkBox = (CheckBox) findViewById(R.id.add_details_klipsa_checkBox);
-        details_klipsa_checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    (findViewById(R.id.add_details_klipsa_layout)).setVisibility(View.VISIBLE);
-                } else {
-                    (findViewById(R.id.add_details_klipsa_layout)).setVisibility(View.GONE);
-
-                }
-            }
-        });
 
         Intent incomingIntent = getIntent();
         if (incomingIntent != null) {
@@ -134,8 +111,13 @@ public class AddDetailActivity extends AppCompatActivity {
 
         Utils.setImageViewFromFile(iv, filename);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_detail_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle("Введіть дані про тварину");
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +191,10 @@ public class AddDetailActivity extends AppCompatActivity {
     }
 
     public void detailsDoneClick(View view) {
+        addDetailsDone();
+    }
+
+    private void addDetailsDone() {
         DogModel dm = new DogModel();
 
         dm.setPhoto(String.valueOf(filename));
@@ -229,9 +215,12 @@ public class AddDetailActivity extends AppCompatActivity {
 
         (new DogOrm(this, TAG)).storeDog(dm);
         Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra("lat", mLastLocation.getLatitude());
-        intent.putExtra("lng", mLastLocation.getLongitude());
+        if (mLastLocation != null) {
+            intent.putExtra("lat", mLastLocation.getLatitude());
+            intent.putExtra("lng", mLastLocation.getLongitude());
+        }
         startActivity(intent);
+
     }
 
     private void updateLocation(Location mLastLocation) {
@@ -375,6 +364,97 @@ public class AddDetailActivity extends AppCompatActivity {
         }
     }
 
+    public void add_details_date_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_date));
+    }
+
+    private void showAnimateEditText(EditText et) {
+        et.setVisibility(View.VISIBLE);
+        Animation searchShowAnimation;
+        searchShowAnimation = AnimationUtils.loadAnimation(this, R.anim.show_edit_text);
+        searchShowAnimation.setRepeatCount(1);
+        et.startAnimation(searchShowAnimation);
+
+    }
+
+    public void add_details_geo_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_geo));
+    }
+
+    public void add_details_poroda_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_poroda));
+    }
+
+    public void add_details_size_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_size));
+
+    }
+
+    public void add_details_mast_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_mast));
+
+    }
+
+    public void add_details_oshiynik_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_oshiynik));
+
+    }
+
+    public void add_details_name_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_name));
+
+    }
+
+    public void add_details_klipsa_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_klipsa));
+
+    }
+
+    public void add_details_prikmety_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_prikmety));
+
+    }
+
+    public void add_details_primitky_label(View view) {
+        showAnimateEditText((EditText) findViewById(R.id.add_details_primitki));
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: ");
+        switch (requestCode) {
+            case Constants.Requests.REQUEST_CODE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "onRequestPermissionsResult: granted");
+                    initializeLocationServices();
+                } else {
+                    Log.d(TAG, "onRequestPermissionsResult: NOT granted");
+                    Toast.makeText(AddDetailActivity.this, "Permission Denied, You cannot access location data.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add_detail_done) {
+            addDetailsDone();
+            return true;
+        } else if (id == R.id.home) {
+            finish();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
     private class NetLocationListener extends MyLocationListener {
         public NetLocationListener(String provider) {
             super(provider);
@@ -386,6 +466,7 @@ public class AddDetailActivity extends AppCompatActivity {
             mLastLocation.set(location);
             AddDetailActivity.this.mLastLocation = mLastLocation;
 //            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
+            showAnimateEditText((EditText) findViewById(R.id.add_details_geo));
             details_address.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
             updateLocation(mLastLocation);
         }
@@ -414,24 +495,9 @@ public class AddDetailActivity extends AppCompatActivity {
             mLastLocation.set(location);
             AddDetailActivity.this.mLastLocation = mLastLocation;
 //            Toast.makeText(AddDetailActivity.this, location.toString(), Toast.LENGTH_SHORT).show();
+            showAnimateEditText((EditText) findViewById(R.id.add_details_geo));
             details_address.setText(mLastLocation.getLatitude() + " " + mLastLocation.getLongitude());
             updateLocation(mLastLocation);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult: ");
-        switch (requestCode) {
-            case Constants.Requests.REQUEST_CODE_LOCATION:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d(TAG, "onRequestPermissionsResult: granted");
-                    initializeLocationServices();
-                } else {
-                    Log.d(TAG, "onRequestPermissionsResult: NOT granted");
-                    Toast.makeText(AddDetailActivity.this, "Permission Denied, You cannot access location data.", Toast.LENGTH_SHORT).show();
-                }
-                break;
         }
     }
 }

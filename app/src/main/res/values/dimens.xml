@@ -2,7 +2,7 @@
     <dimen name="app_bar_height">385dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="row_height">48dp</dimen>
+    <dimen name="row_height">72dp</dimen>
     <dimen name="business_logo_size">100dp</dimen>
     <dimen name="business_logo_size_8">112dp</dimen>
     <dimen name="edit_textSize">16dp</dimen>

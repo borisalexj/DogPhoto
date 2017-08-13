@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" height="80px" version="1.1" viewBox="0 0 72 80"
+     width="72px" xmlns="http://www.w3.org/2000/svg">
+    <!-- Generator: sketchtool 46 (44423) - http://www.bohemiancoding.com/sketch -->
+    <title>79517065-E3A6-481D-98E4-6D81A3BC83FF</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient id="linearGradient-1" x1="50%" x2="50%" y1="0%" y2="99.0214445%">
+            <stop offset="0%" stop-color="#000000" stop-opacity="0"></stop>
+            <stop offset="80%" stop-color="#000000" stop-opacity="0.02"></stop>
+            <stop offset="100%" stop-color="#000000" stop-opacity="0.04"></stop>
+        </linearGradient>
+        <linearGradient id="linearGradient-2" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.12"></stop>
+            <stop offset="20%" stop-color="#FFFFFF" stop-opacity="0.06"></stop>
+            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"></stop>
+        </linearGradient>
+        <circle cx="28" cy="28" id="path-3" r="28"></circle>
+        <filter filterUnits="objectBoundingBox" height="185.7%" id="filter-4" width="185.7%"
+                x="-42.9%" y="-28.6%">
+            <feOffset dx="0" dy="8" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1"
+                            stdDeviation="4"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out"
+                         result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" type="matrix"
+                           values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.24 0"></feColorMatrix>
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter2"></feOffset>
+            <feGaussianBlur in="shadowOffsetOuter2" result="shadowBlurOuter2"
+                            stdDeviation="4"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter2" in2="SourceAlpha" operator="out"
+                         result="shadowBlurOuter2"></feComposite>
+            <feColorMatrix in="shadowBlurOuter2" result="shadowMatrixOuter2" type="matrix"
+                           values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.12 0"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="shadowMatrixOuter2"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1">
+        <g id="1---Home-Screen" transform="translate(-8.000000, -524.000000)">
+            <g id="Button-Copy" transform="translate(16.000000, 532.000000)">
+                <g id="Oval">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-4)"
+                         xlink:href="#path-3"></use>
+                    <use fill="#4285F4" fill-rule="evenodd" xlink:href="#path-3"></use>
+                    <circle cx="28" cy="28" r="27.75" stroke="url(#linearGradient-1)"
+                            stroke-width="0.5"></circle>
+                    <circle cx="28" cy="28" r="27.75" stroke="url(#linearGradient-2)"
+                            stroke-width="0.5"></circle>
+                </g>
+                <g id="add" transform="translate(16.000000, 16.000000)">
+                    <rect height="24" id="bounds" width="24" x="0" y="0"></rect>
+                    <g fill="#FFFFFF" fill-rule="nonzero" id="web"
+                       transform="translate(2.000000, 4.000000)">
+                        <polygon id="Shape"
+                                 points="8 17 8 11 12 11 12 17 17 17 17 9 20 9 10 0 0 9 3 9 3 17"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
