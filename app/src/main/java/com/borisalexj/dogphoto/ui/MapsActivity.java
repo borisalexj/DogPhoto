@@ -148,6 +148,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (item.getItemId() == R.id.action_map_search) {
             Toast.makeText(this, "Will be implemented", Toast.LENGTH_SHORT).show();
             return true;
+        } else if (item.getItemId() == R.id.action_map_add) {
+            startActivity(new Intent(this, CameraActivity.class));
+            return true;
         } else if (item.getItemId() == android.R.id.home) {
             exit();
             return true;
