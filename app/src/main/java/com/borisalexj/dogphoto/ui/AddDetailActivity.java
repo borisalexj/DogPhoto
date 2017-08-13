@@ -447,7 +447,13 @@ public class AddDetailActivity extends AppCompatActivity {
             addDetailsDone();
             return true;
         } else if (item.getItemId() == android.R.id.home) {
-            finish();
+            if (mLastLocation == null) {
+                Toast.makeText(this, "Потрібно включити геолокацію", Toast.LENGTH_SHORT).show();
+
+            } else {
+
+                finish();
+            }
             return true;
         } else {
             return super.onOptionsItemSelected(item);

@@ -125,12 +125,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
+        exit();
+    }
+
+    private void exit() {
         Intent a = new Intent(Intent.ACTION_MAIN);
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,7 +149,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Toast.makeText(this, "Will be implemented", Toast.LENGTH_SHORT).show();
             return true;
         } else if (item.getItemId() == android.R.id.home) {
-            finish();
+            exit();
             return true;
         } else {
             return super.onOptionsItemSelected(item);

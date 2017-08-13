@@ -310,4 +310,19 @@ public class CameraActivity extends AppCompatActivity {
         Log.d(TAG, "goToListClick: ");
         startActivity(new Intent(this, MapsActivity.class));
     }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        exit();
+    }
+
+    private void exit() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+
+    }
+
 }
