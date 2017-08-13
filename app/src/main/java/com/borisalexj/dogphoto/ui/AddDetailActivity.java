@@ -11,6 +11,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -110,6 +111,7 @@ public class AddDetailActivity extends AppCompatActivity {
         Utils.setImageViewFromFile(iv, filename);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.add_detail_toolbar);
+        ((AppBarLayout) findViewById(R.id.app_bar_add_detail)).setExpanded(false);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
