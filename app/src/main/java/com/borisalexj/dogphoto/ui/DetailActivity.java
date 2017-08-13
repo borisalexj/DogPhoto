@@ -3,6 +3,10 @@ package com.borisalexj.dogphoto.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +43,21 @@ public class DetailActivity extends AppCompatActivity {
             dog_id = incomingIntent.getIntExtra("dog_id", -1);
         }
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.show_detail_toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: ");
+                DetailActivity.this.finish();
+            }
+        });
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle("Дані про тварину");
+
+
         dm = (new DogOrm(this, TAG)).getDog(dog_id);
 
         detailImageView = (ImageView) findViewById(R.id.detail_image_view);
@@ -69,4 +88,16 @@ public class DetailActivity extends AppCompatActivity {
         detailsOsobliviPrikmety.setText(dm.getPrikmety());
         detailsPrimitki.setText(dm.getPrimitki());
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: ");
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

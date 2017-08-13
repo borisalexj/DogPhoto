@@ -2,10 +2,14 @@ package com.borisalexj.dogphoto.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.borisalexj.dogphoto.R;
 import com.borisalexj.dogphoto.db.DogOrm;
@@ -21,7 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
     String TAG = Constants.TAG + this.getClass().getSimpleName();
     private RecyclerView mRecyclerView;
     private LatLng mLatLng;
@@ -45,6 +49,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     incomingIntent.getDoubleExtra("lat", 0),
                     incomingIntent.getDoubleExtra("lng", 0));
         }
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.map_toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_home_white_24dp);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle("Карта");
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -117,4 +131,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(a);
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_map, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_map_search) {
+            Toast.makeText(this, "Will be implemented", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 }

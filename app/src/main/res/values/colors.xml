@@ -9,4 +9,6 @@
     <color name="lite_gray">#EEE</color>
     <color name="green">#54d483</color>
     <color name="blue">#5db3f5</color>
+    <color name="toolbar_background">#4285f4</color>
+    <color name="beige">#F4ECE4</color>
 </resources>

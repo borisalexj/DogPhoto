@@ -1,27 +1,41 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
+
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/map"
               android:name="com.google.android.gms.maps.SupportMapFragment"
-              android:layout_width="394dp"
-              android:layout_height="395dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               tools:context="com.borisalexj.dogphoto.ui.MapsActivity"/>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/map_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/toolbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_collapseMode="pin"
+        app:layout_scrollFlags="enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="@style/route_title"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#0000"
         android:orientation="horizontal"
-        android:padding="8dp"
+        android:padding="4dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:reverseLayout="true"
         tools:listitem="@layout/dog_item">
     </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+</FrameLayout>

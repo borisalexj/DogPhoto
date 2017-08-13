@@ -49,8 +49,6 @@ import com.google.maps.model.LatLng;
 import java.util.Calendar;
 import java.util.Date;
 
-import static android.R.attr.id;
-
 public class AddDetailActivity extends AppCompatActivity {
     private String TAG = Constants.TAG + this.getClass().getSimpleName();
 
@@ -187,7 +185,8 @@ public class AddDetailActivity extends AppCompatActivity {
         Calendar c = Calendar.getInstance();
         Date currentDateTime = c.getTime();
         mCurrentDateTime = currentDateTime.getTime();
-        details_date.setText(Utils.getDateTimeFromLong(mCurrentDateTime, Constants.DATE_FORMAT));
+        details_date.setText(Utils.getDateTimeFromLong(mCurrentDateTime, Constants.DATE_TIME_FORMAT));
+        showAnimateEditText(details_date);
     }
 
     public void detailsDoneClick(View view) {
@@ -447,7 +446,7 @@ public class AddDetailActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_add_detail_done) {
             addDetailsDone();
             return true;
-        } else if (id == R.id.home) {
+        } else if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         } else {
